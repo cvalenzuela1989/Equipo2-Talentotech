@@ -1,1 +1,1 @@
-# Equipo2-Talentotech
+# Equipo2-InnovaLab
