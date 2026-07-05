@@ -21,6 +21,16 @@ public class LtiMapper {
         Map<String, Object> resource =
                 jwt.getClaim("https://purl.imsglobal.org/spec/lti/claim/resource_link").asMap();
 
+        Map<String, Object> resourceLink =
+                jwt.getClaim("https://purl.imsglobal.org/spec/lti/claim/resource_link")
+                        .asMap();
+
+        Object id = resourceLink.get("id");
+
+        if(id != null){
+            dto.setResourceLinkId(id.toString());
+        }
+
         System.out.println(resource);
 
         if (context != null) {

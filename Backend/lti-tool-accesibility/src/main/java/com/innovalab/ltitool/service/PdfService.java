@@ -1,6 +1,9 @@
 package com.innovalab.ltitool.service;
 
 import com.innovalab.ltitool.config.MoodleWsProperties;
+import org.apache.pdfbox.Loader;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,5 +25,17 @@ public class PdfService {
                 + "token=" + props.getToken();
 
         return restTemplate.getForObject(finalUrl, byte[].class);
+    }
+
+    public String extractText(byte[] pdfBytes){
+
+        try(PDDocument doc= Loader.loadPDF(pdfBytes)){
+
+            return new PDFTextStripper()
+                    .getText(doc);
+
+        }catch(Exception e){
+            throw new RuntimeException("Error leyendo PDF",e);
+        }
     }
 }

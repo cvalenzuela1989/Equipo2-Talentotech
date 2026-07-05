@@ -24,65 +24,54 @@ public class MoodleContentResolver {
                         Long.valueOf(dto.getCourseId())
                 );
 
-        String resourceTitle =
-                dto.getModuleTitle();
+        String target = dto.getResourceLinkId(); // 👈 CLAVE REAL
 
-        System.out.println(
-                "BUSCANDO TOOL: " + resourceTitle
-        );
+        System.out.println("BUSCANDO TOOL: " + target);
 
         for(JsonNode section : sections){
 
             for(JsonNode module : section.get("modules")){
 
-                String moduleName =
-                        module.get("name").asText();
+                String instanceId =
+                        module.get("instance").asText();
 
+                System.out.println("Comparando instance: " + instanceId);
 
-                System.out.println(
-                        "Comparando: " + moduleName
-                );
+                if(instanceId.equals(target)){
 
-                if(moduleName.equals(resourceTitle)){
-                    // SECTION
-                    dto.setSectionId(
-                            section.get("section").asText()
-                    );
-
-
-                    dto.setSectionTitle(
-                            section.get("name").asText()
-                    );
+                    dto.setSectionId(section.get("section").asText());
+                    dto.setSectionTitle(section.get("name").asText());
 
                     System.out.println(
-                            "Section encontrada: "
-                                    + dto.getSectionId()
-                                    + " - "
-                                    + dto.getSectionTitle()
+                            "Section encontrada: " +
+                                    dto.getSectionId() + " - " +
+                                    dto.getSectionTitle()
                     );
 
-                    // BUSCAR PDF EN LA MISMA SECTION
                     for(JsonNode sectionModule : section.get("modules")){
 
-                        String modName =
-                                sectionModule.get("modname").asText();
+                        if("resource".equals(sectionModule.get("modname").asText())
+                                && sectionModule.has("contents")){
 
-                        if("resource".equals(modName)  && sectionModule.has("contents")){
                             for(JsonNode content : sectionModule.get("contents")){
-                                String mime = content.get("mimetype").asText();
-                                if("application/pdf".equals(mime)){
+
+                                if("application/pdf".equals(content.get("mimetype").asText())){
+
                                     dto.setPdfName(content.get("filename").asText());
                                     dto.setPdfUrl(content.get("fileurl").asText());
-                                    System.out.println("PDF encontrado: "+dto.getPdfName());
+
+                                    System.out.println("PDF encontrado: " + dto.getPdfName());
                                     return;
                                 }
                             }
                         }
                     }
-                 return;
+
+                    return;
                 }
             }
         }
-        throw new RuntimeException("No se encontró la herramienta" );
+
+        throw new RuntimeException("No se encontró la herramienta");
     }
 }

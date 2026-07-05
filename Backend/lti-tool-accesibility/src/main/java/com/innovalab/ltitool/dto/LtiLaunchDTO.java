@@ -26,6 +26,16 @@ public class LtiLaunchDTO {
     private String pdfName;
     private String pdfUrl;
 
+    private String resourceLinkId;
+
+    public String getResourceLinkId() {
+        return resourceLinkId;
+    }
+
+    public void setResourceLinkId(String resourceLinkId) {
+        this.resourceLinkId = resourceLinkId;
+    }
+
     // getters/setters
 
     public String getUserId() {
@@ -148,6 +158,7 @@ public class LtiLaunchDTO {
                 ", message='" + message + '\'' +
                 ", pdfName='" + pdfName + '\'' +
                 ", pdfUrl='" + pdfUrl + '\'' +
+                ", resourceLinkId='" + resourceLinkId + '\'' +
                 '}';
     }
 }

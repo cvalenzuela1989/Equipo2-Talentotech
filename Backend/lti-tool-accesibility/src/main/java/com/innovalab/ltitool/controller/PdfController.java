@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 public class PdfController {
 
     private final PdfService pdfService;
@@ -21,19 +21,17 @@ public class PdfController {
         this.pdfService = pdfService;
     }
 
-    @GetMapping("/pdf")
-    public ResponseEntity<byte[]> getPdf(
-            @RequestParam String fileUrl) {
+    @GetMapping("/view")
+    public ResponseEntity<byte[]> getPdf(@RequestParam String fileUrl) {
 
-
-        // 3. descargar PDF directamente
         byte[] pdfBytes = pdfService.downloadPdf(fileUrl);
 
-        // 4. devolver al frontend
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                         "inline; filename=archivo.pdf")
                 .body(pdfBytes);
     }
+
+
 }
