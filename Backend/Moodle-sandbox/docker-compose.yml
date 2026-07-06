@@ -1,0 +1,48 @@
+services:
+  mariadb:
+    image: mariadb:10.11
+    container_name: moodle-mariadb
+    environment:
+      - MARIADB_ROOT_PASSWORD=root_password_123
+      - MARIADB_DATABASE=moodle_db
+      - MARIADB_USER=moodle_user
+      - MARIADB_PASSWORD=moodle_password
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    restart: unless-stopped
+
+  moodle:
+    image: php:8.1-apache
+    container_name: moodle-app
+    ports:
+      - "80:80"
+    volumes:
+      - moodle_data:/var/www/html
+    environment:
+      - MOODLE_URL=http://localhost
+    restart: unless-stopped
+    # Aquí creamos un archivo temporal de PHP directo desde Docker antes de arrancar el script
+    command: >
+      bash -c "
+      echo 'max_input_vars = 5000' > /usr/local/etc/php/conf.d/docker-php-ext-max-vars.ini
+      
+      if [ ! -f /var/www/html/index.php ]; then
+        echo 'Descargando Moodle limpio de la fuente oficial...'
+        apt-get update && apt-get install -y wget unzip libpng-dev libicu-dev libxml2-dev libzip-dev
+        docker-php-ext-install gd intl mysqli opcache xml zip
+        wget https://download.moodle.org/download.php/direct/stable403/moodle-latest-403.zip -O /tmp/moodle.zip
+        unzip /tmp/moodle.zip -d /tmp/
+        mv /tmp/moodle/* /var/www/html/
+      fi
+      
+      echo 'Asegurando permisos de escritura...'
+      chown -R www-data:www-data /var/www
+      chmod -R 775 /var/www
+      
+      apache2-foreground"
+    depends_on:
+      - mariadb
+
+volumes:
+  moodle_data:
+  mariadb_data:
