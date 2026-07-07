@@ -1,25 +1,22 @@
 
-
 import './App.css'
-
-
-
-
-import PaletaColor from './Componentes/Paleta/PaletaColor.jsx'
 import { ColorProvider } from './Context/fondoContext';
 import Navbar from './Componentes/Navbar/Navbar.jsx'
 
-import VisorPDF from './Componentes/LectorPdf2/VisorPDF.jsx';
+
+import VisorNuevo from './Componentes/VisorPDF/VisorNuevo.jsx';
+
 function App() {
  
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
+   
       <ColorProvider>
-        
+       
   
-      <VisorPDF />
+      <VisorNuevo />
         
   
       </ColorProvider>

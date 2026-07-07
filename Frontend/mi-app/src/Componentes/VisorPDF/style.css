@@ -2,7 +2,7 @@
 .form-panel {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
   background-color: #1a1b1b;
 border-radius: 12px;
     padding: 0.5rem;
@@ -41,9 +41,9 @@ border-radius: 12px;
 
 .btn-tema-opcion {
     width: 100%;
-    padding: 0.75rem 1rem !important;
-    font-weight: 500 !important;
-    border-radius: 8px !important;
+    padding: 0.75rem 1rem ;
+    font-weight: 500 ;
+    border-radius: 8px; 
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -86,3 +86,43 @@ border-radius: 12px;
     color: #1a1b1b;
 }
 
+.boton-dinamico {
+    transition: all 0.3s ease;
+    background-color: #e01010;
+    border: 1px solid #eaf1f1;
+    border-radius: 8px;
+}
+.boton-dinamico:hover {
+    background-color: #eaf1f1;
+    color: #e01010;
+    border: 1px solid #e01010;
+}
+.boton-dinamico-escuchar {
+    transition: all 0.3s ease;
+    background-color: #97f572;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+}
+.boton-dinamico-escuchar:hover {
+  background-color: #07d14b;
+  color: #0c0c0b;
+}
+.texto-dinamico {
+    transition: all 0.3s ease;
+    background-color: #eaf1f1;
+    border: 1px solid #111313;
+    border-radius: 8px;
+    color: #111313;
+}
+.boton-accesible {
+    transition: all 0.3s ease;
+    background-color: #1e293b;
+    border: 1px solid #eaf1f1;
+    border-radius: 8px;
+    color: #eaf1f1;
+}
+.boton-accesible:hover {
+    background-color: #eaf1f1;
+    color: #1e293b;
+    border: 1px solid #1e293b;
+}
