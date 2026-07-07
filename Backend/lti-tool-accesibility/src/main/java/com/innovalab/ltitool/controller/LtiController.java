@@ -9,6 +9,8 @@ import com.innovalab.ltitool.service.MoodleContentResolver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -24,6 +26,9 @@ public class LtiController {
 
     @Value("${moodle.auth-url}")
     private String authUrl;
+
+    @Value("${app.react-url}")
+    private String appReactURL;
 
 
     public LtiController(
@@ -87,7 +92,7 @@ public class LtiController {
     // Estudiante o Deep Linking
     // =====================================================
     @PostMapping("/launch")
-    public ResponseEntity<?> launch(@RequestParam Map<String,String> params ){
+    public Object launch(@RequestParam Map<String,String> params ){
 
         System.out.println("\n========== LTI LAUNCH ==========");
         String idToken = params.get("id_token");
@@ -100,36 +105,38 @@ public class LtiController {
 
         DecodedJWT jwt =  JWT.decode(idToken);
 
-        String messageType = jwt.getClaim("https://purl.imsglobal.org/spec/lti/claim/message_type"                      )
-                        .asString();
-
-        System.out.println("MESSAGE TYPE = " + messageType);
-        /*
-         * Profesor insertando contenido
-         */
-        if("LtiDeepLinkingRequest".equals(messageType)){
-            System.out.println(
-                    "========== DEEP LINKING MODE =========="
-            );
-            return ResponseEntity.ok(
-                    buildDeepLinkPage()
-            );
-        }
-
-        /*
-         * Alumno entrando a la herramienta
-         */
-        System.out.println(
-                "========== RESOURCE LINK MODE =========="
-        );
 
         LtiLaunchDTO dto = LtiMapper.fromJWT(jwt);
         moodleContentResolver.resolveSectionId(dto);
+
+        //TODO log this
         System.out.println(dto);
 
         //return ResponseEntity.ok(buildStudentPagePDF(dto));
-        return ResponseEntity.ok(buildStudentPage(dto));
+        //return ResponseEntity.ok(buildStudentPage(dto));
+        return new RedirectView(buildFrontendRedirectUrl(dto));
 
+    }
+
+
+    /**
+     * Construye de manera descriptiva la URL de redirección hacia el Frontend de React,
+     * adjuntando los parámetros de contexto e identificación del usuario necesarios.
+     *
+     * @param dto Datos del lanzamiento LTI procesados desde Moodle
+     * @return String URL completa con Query Params listos para el Frontend
+     */
+    private String buildFrontendRedirectUrl(LtiLaunchDTO dto) {
+        return UriComponentsBuilder.fromUriString(appReactURL)
+                .queryParam("userId", dto.getUserId()) // ID unívoco para futuras preferencias
+                .queryParam("user", dto.getName())
+                .queryParam("email", dto.getEmail())
+                .queryParam("course", dto.getCourseTitle())
+                .queryParam("section", dto.getSectionTitle())
+                .queryParam("pdfUrl", dto.getPdfUrl())
+                // .queryParam("role", dto.getRole()) // Descomentar cuando se agregue el rol al DTO
+                .build()
+                .toUriString();
     }
 
     private String buildStudentPagePDF(LtiLaunchDTO dto) {
@@ -201,51 +208,6 @@ public class LtiController {
                 .replace("{MODULE_ID}", String.valueOf(dto.getModuleId()))
                 .replace("{PDF_URL}", String.valueOf(dto.getPdfUrl()));
     }
-
-
-
-
-    // =====================================================
-    // PANTALLA PROFESOR
-    // =====================================================
-    private String buildDeepLinkPage(){
-
-
-        return """
-        <!DOCTYPE html>
-
-        <html>
-
-        <body>
-
-
-        <h2>
-        🤖 Asistente de Accesibilidad IA
-        </h2>
-
-
-        <p>
-        Insertar herramienta en este curso
-        </p>
-
-
-        <button>
-        Agregar asistente
-        </button>
-
-
-        </body>
-
-        </html>
-        """;
-
-    }
-
-
-
-
-
-
 
     private String buildStudentPage(LtiLaunchDTO dto) {
 
