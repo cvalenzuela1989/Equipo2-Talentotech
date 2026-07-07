@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
-import PanelHerramientas from './PanelHerramientas';
+import PanelHerramientas from './PanelHerramientas/PanelHerramientas.jsx';
 import HojaTexto from './HojaTexto';
 import './style.css';
 import { ColorContext } from '../../Context/fondoContext.jsx'; // 🌟 Asegurate que combine con el nombre del export del Contexto
