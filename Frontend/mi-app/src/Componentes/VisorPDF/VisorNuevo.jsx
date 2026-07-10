@@ -48,51 +48,64 @@ export default function VisorAccesibleLTI() {
   useEffect(() => {
     if (!studentData || !studentData.pdfUrl) return;
 
-    const procesarPdfDesdeUrl = async () => {
-      setCargando(true);
-      setErrorPlataforma(null);
-      try {
-        const urlMoodleEncodada = encodeURIComponent(studentData.pdfUrl);
-        const urlTuApi = `/api/v1/view?fileUrl=${urlMoodleEncodada}`;
-
-        const res = await fetch(urlTuApi);
-        if (!res.ok) throw new Error(`Error de red: servidor respondió con estado ${res.status}`);
-        
-        const arrayBuffer = await res.arrayBuffer();
-        const decodificador = new TextDecoder("utf-8");
-        const inicioTexto = decodificador.decode(new Uint8Array(arrayBuffer.slice(0, 10))).trim();
-
-        if (!inicioTexto.startsWith("%PDF")) {
-          const textoRespuesta = decodificador.decode(new Uint8Array(arrayBuffer));
-          console.error("El backend no devolvió un PDF. Respuesta recibida:", textoRespuesta);
+      const procesarPdfDesdeUrl = async () => {
+          setCargando(true);
+          setErrorPlataforma(null);
           try {
-            const jsonError = JSON.parse(textoRespuesta);
-            throw new Error(jsonError.error || "Error devuelto por la plataforma de estudio.");
-          } catch (e) {
-            throw new Error("El servidor no envió un documento válido.");
+              const urlMoodleEncodada = encodeURIComponent(studentData.pdfUrl);
+              const urlTuApi = `/api/v1/view?fileUrl=${urlMoodleEncodada}`;
+
+              const res = await fetch(urlTuApi);
+              if (!res.ok) throw new Error(`Error de red: servidor respondió con estado ${res.status}`);
+        
+              const arrayBuffer = await res.arrayBuffer();
+              const decodificador = new TextDecoder("utf-8");
+              const inicioTexto = decodificador.decode(new Uint8Array(arrayBuffer.slice(0, 10))).trim();
+
+              if (!inicioTexto.startsWith("%PDF")) {
+                  const textoRespuesta = decodificador.decode(new Uint8Array(arrayBuffer));
+                  console.error("El backend no devolvió un PDF. Respuesta recibida:", textoRespuesta);
+                  try {
+                      const jsonError = JSON.parse(textoRespuesta);
+                      throw new Error(jsonError.error || "Error devuelto por la plataforma de estudio.");
+                  } catch (e) {
+                      throw new Error("El servidor no envió un documento válido.");
+                  }
+              }
+
+              const documentoPdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+              let textoAcumulado = '';
+
+              for (let i = 1; i <= documentoPdf.numPages; i++) {
+                  const pagina = await documentoPdf.getPage(i);
+                  const contenidoTexto = await pagina.getTextContent();
+                  const textoPagina = contenidoTexto.items.map(item => item.str).join(' ');
+                  textoAcumulado += textoPagina + '\n';
+              }
+
+              // 🌟 LOGICA DE FORMATEO AVANZADO:
+              // 1. Buscamos puntos seguidos de un espacio (punto y aparte/seguido significativo) y agregamos un salto.
+              // 2. Buscamos signos de interrogación de cierre (?) o exclamación (!) para segmentar oraciones interactivas.
+              let textoFormateado = textoAcumulado
+                  .replace(/\. +/g, '.\n')   // Si hay un punto seguido de uno o más espacios, mete un salto
+                  .replace(/\? +/g, '?\n')   // Si termina una pregunta y sigue texto, mete un salto
+                  .replace(/\! +/g, '!\n');  // Si termina una exclamación y sigue texto, mete un salto
+
+              // Generamos el array de líneas filtrando los renglones vacíos
+              const lineas = textoFormateado
+                  .split('\n')
+                  .map(l => l.trim())
+                  .filter(l => l.length > 0);
+          
+              setLineasTexto(lineas);
+
+          } catch (error) {
+              console.error("Error automatizado al procesar el PDF LTI:", error);
+              setErrorPlataforma(error.message);
+          } finally {
+              setCargando(false);
           }
-        }
-
-        const documentoPdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-        let textoAcumulado = '';
-
-        for (let i = 1; i <= documentoPdf.numPages; i++) {
-          const pagina = await documentoPdf.getPage(i);
-          const contenidoTexto = await pagina.getTextContent();
-          const textoPagina = contenidoTexto.items.map(item => item.str).join(' ');
-          textoAcumulado += textoPagina + '\n';
-        }
-
-        const lineas = textoAcumulado.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-        setLineasTexto(lineas);
-      } catch (error) {
-        console.error("Error automatizado al procesar el PDF LTI:", error);
-        setErrorPlataforma(error.message);
-      } finally {
-        setCargando(false);
       }
-    };
-
     procesarPdfDesdeUrl();
   }, [studentData]);
 
