@@ -1,8 +1,8 @@
 package com.innovalab.ltitool.dto;
 
-public class LtiLaunchDTO {
+import java.time.Instant;
 
-    // ================= USER =================
+public class LtiLaunchDTO {  // ================= USER =================
     private String userId;
     private String name;
     private String email;
@@ -27,6 +27,11 @@ public class LtiLaunchDTO {
     private String pdfUrl;
 
     private String resourceLinkId;
+
+    //Identificador unico de la peticion del LMS
+    private String idLaunch;
+
+    private Instant launchTime;
 
     public String getResourceLinkId() {
         return resourceLinkId;
@@ -142,6 +147,18 @@ public class LtiLaunchDTO {
         this.pdfUrl = pdfUrl;
     }
 
+   public void setIdLaunch(String idLaunch) {
+        this.idLaunch = idLaunch;
+    }
+
+    public String getIdLaunch() {
+        return idLaunch;
+    }
+
+    public Instant getLaunchTime() { return launchTime;   }
+
+    public void setLaunchTime(Instant launchTime) { this.launchTime = launchTime;   }
+
     @Override
     public String toString() {
         return "LtiLaunchDTO{" +
@@ -159,6 +176,8 @@ public class LtiLaunchDTO {
                 ", pdfName='" + pdfName + '\'' +
                 ", pdfUrl='" + pdfUrl + '\'' +
                 ", resourceLinkId='" + resourceLinkId + '\'' +
+                ", idLaunch='" + idLaunch + '\'' +
+                ", launchTime=" + launchTime +
                 '}';
     }
 }

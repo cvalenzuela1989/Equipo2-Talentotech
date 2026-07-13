@@ -1,6 +1,6 @@
 package com.innovalab.ltitool.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.innovalab.ltitool.dto.LtiLaunchDTO;
 import org.springframework.stereotype.Service;
 
@@ -26,27 +26,16 @@ public class MoodleContentResolver {
 
         String target = dto.getResourceLinkId(); // 👈 CLAVE REAL
 
-        System.out.println("BUSCANDO TOOL: " + target);
-
         for(JsonNode section : sections){
 
             for(JsonNode module : section.get("modules")){
 
-                String instanceId =
-                        module.get("instance").asText();
-
-                System.out.println("Comparando instance: " + instanceId);
+                String instanceId = module.get("instance").asText();
 
                 if(instanceId.equals(target)){
 
                     dto.setSectionId(section.get("section").asText());
                     dto.setSectionTitle(section.get("name").asText());
-
-                    System.out.println(
-                            "Section encontrada: " +
-                                    dto.getSectionId() + " - " +
-                                    dto.getSectionTitle()
-                    );
 
                     for(JsonNode sectionModule : section.get("modules")){
 
@@ -59,15 +48,12 @@ public class MoodleContentResolver {
 
                                     dto.setPdfName(content.get("filename").asText());
                                     dto.setPdfUrl(content.get("fileurl").asText());
-
-                                    System.out.println("PDF encontrado: " + dto.getPdfName());
                                     return;
                                 }
                             }
                         }
                     }
-
-                    return;
+                   return;
                 }
             }
         }

@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### ARCHIVO DE CONFIG DE BBDD ###
+src/main/resources/lti-external-tool-firebase-adminsdk-fbsvc-2a5e705315.json

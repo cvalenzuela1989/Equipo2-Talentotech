@@ -1,6 +1,6 @@
 package com.innovalab.ltitool.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
 import com.innovalab.ltitool.config.MoodleWsProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
