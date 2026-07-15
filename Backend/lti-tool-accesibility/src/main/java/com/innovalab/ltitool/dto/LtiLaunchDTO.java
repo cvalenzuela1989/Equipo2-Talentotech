@@ -19,7 +19,7 @@ public class LtiLaunchDTO {  // ================= USER =================
     private String moduleId;
     private String moduleTitle;
 
-    // ================= FRONT DEMO =================
+    // ================= FRONT =================
     private String status;
     private String message;
 

@@ -30,6 +30,8 @@ public class LtiPersistenceService {
             System.out.println("Petición LTI guardada con éxito. ID: " + dto.getIdLaunch());
         } catch (Exception e) {
             System.err.println("Error al persistir el acceso LTI en Firebase: " + e.getMessage());
+            // lanza para arriba para que lo atrape Global Handler
+            throw new RuntimeException("Error interno guardando los datos de acceso de LTI en Firebase", e);
         }
     }
 
@@ -44,6 +46,7 @@ public class LtiPersistenceService {
             System.out.println("Evento registrado para: " + dto.getUserId());
         } catch (Exception e) {
             System.err.println("Error al guardar evento: " + e.getMessage());
+            throw new RuntimeException("Error interno guardando los datos de eventos del usuario en Firebase", e);
         }
     }
     }
