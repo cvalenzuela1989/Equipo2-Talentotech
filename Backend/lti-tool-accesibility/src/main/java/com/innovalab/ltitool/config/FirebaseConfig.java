@@ -8,57 +8,55 @@ import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 @Configuration
 public class FirebaseConfig {
 
-    @Value("${firebase.config.file}")
+    @Value("${firebase.config.file:}") // Valor por defecto vacío
     private String firebaseConfigFile;
 
-    /**
-     * Inicializa la aplicación de Firebase de manera segura al arrancar el contexto.
-     * Registramos la inicialización dentro de un Bean para asegurar que ocurra ANTES
-     * de que otros servicios intenten usar Firestore.
-     */
+    // Esta variable la leeremos desde las Environment Variables de Render
+    @Value("${FIREBASE_CONFIG_JSON:#{null}}")
+    private String firebaseConfigJson;
+
     @Bean
     public FirebaseApp firebaseApp() {
         try {
-            if (firebaseConfigFile == null || firebaseConfigFile.trim().isEmpty()) {
-                throw new IllegalArgumentException("La propiedad firebase.config.file no está configurada en application.properties.");
-            }
+            GoogleCredentials credentials;
 
-            InputStream serviceAccount = getClass()
-                    .getClassLoader()
-                    .getResourceAsStream(firebaseConfigFile);
-
-            if (serviceAccount == null) {
-                throw new IOException("No se pudo encontrar el archivo de Firebase en resources: " + firebaseConfigFile);
+            if (firebaseConfigJson != null && !firebaseConfigJson.isEmpty()) {
+                // CASO RENDER: Leer desde variable de entorno (texto plano del JSON)
+                InputStream inputStream = new ByteArrayInputStream(firebaseConfigJson.getBytes(StandardCharsets.UTF_8));
+                credentials = GoogleCredentials.fromStream(inputStream);
+            } else if (firebaseConfigFile != null && !firebaseConfigFile.isEmpty()) {
+                // CASO LOCAL: Leer desde archivo en carpeta resources
+                InputStream serviceAccount = getClass().getClassLoader().getResourceAsStream(firebaseConfigFile);
+                if (serviceAccount == null) {
+                    throw new IOException("No se encontró el archivo: " + firebaseConfigFile);
+                }
+                credentials = GoogleCredentials.fromStream(serviceAccount);
+            } else {
+                throw new IllegalStateException("Debes configurar firebase.config.file (local) o FIREBASE_CONFIG_JSON (servidor).");
             }
 
             FirebaseOptions options = FirebaseOptions.builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setCredentials(credentials)
                     .build();
 
-            // Si ya existe una instancia creada (por recargas en caliente o tests), la reutiliza
-            if (FirebaseApp.getApps().isEmpty()) {
-                return FirebaseApp.initializeApp(options);
-            } else {
-                return FirebaseApp.getInstance();
-            }
+            return FirebaseApp.getApps().isEmpty() ? FirebaseApp.initializeApp(options) : FirebaseApp.getInstance();
+            
         } catch (IOException e) {
-            throw new RuntimeException("Error crítico al inicializar Firebase Admin SDK: " + e.getMessage(), e);
+            throw new RuntimeException("Error al inicializar Firebase: " + e.getMessage(), e);
         }
     }
 
-    /**
-     * Al exponer esto como @Bean, Spring Boot lo detecta y lo inyecta automáticamente
-     * en el constructor de tu LtiPersistenceService.
-     */
     @Bean
     public Firestore firestore(FirebaseApp firebaseApp) {
-        // FirestoreClient necesita que FirebaseApp ya esté inicializado (por eso se lo pasamos por parámetro)
         return FirestoreClient.getFirestore();
     }
 }
