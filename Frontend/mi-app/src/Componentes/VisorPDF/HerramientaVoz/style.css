@@ -1,0 +1,171 @@
+/* ===========================
+   TARJETA
+=========================== */
+
+.voz-card {
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 18px;
+
+    padding: 22px;
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+
+}
+
+/* ===========================
+   CABECERA
+=========================== */
+
+.voz-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 12px;
+
+}
+
+.voz-icono {
+
+    font-size: 26px;
+
+    color: #2563eb;
+
+}
+
+.voz-header h5 {
+
+    margin: 0;
+
+    font-size: 1rem;
+
+    font-weight: 700;
+
+    color: #1f2937;
+
+}
+
+/* ===========================
+   TEXTO
+=========================== */
+
+.voz-descripcion {
+
+    margin-bottom: 22px;
+
+    color: #6b7280;
+
+    font-size: .9rem;
+
+    line-height: 1.4;
+
+}
+
+/* ===========================
+   BOTONES
+=========================== */
+
+.voz-botones {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+
+}
+
+/* ===========================
+   BOTÓN BASE
+=========================== */
+
+.btn-voz {
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    font-size: .95rem;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .25s;
+
+}
+
+.btn-voz svg {
+
+    font-size: 22px;
+
+}
+
+/* ===========================
+   ESCUCHAR
+=========================== */
+
+.escuchar {
+
+    background: #10b981;
+
+    color: white;
+
+}
+
+.escuchar:hover {
+
+    background: #059669;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 18px rgba(16, 185, 129, .35);
+
+}
+
+/* ===========================
+   DETENER
+=========================== */
+
+.detener {
+
+    background: #ef4444;
+
+    color: white;
+
+}
+
+.detener:hover {
+
+    background: #dc2626;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 18px rgba(239, 68, 68, .35);
+
+}
+
+.btn-voz:active {
+
+    transform: scale(.97);
+
+}

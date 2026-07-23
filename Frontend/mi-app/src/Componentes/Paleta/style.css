@@ -1,0 +1,14 @@
+@import url('https://googleapis.com');
+.paleta-container {
+     display: flex;
+     flex-direction: row;
+         
+    justify-content: center;
+    align-items: center;
+    }
+.paleta-container label{
+     font-size: 18px;
+     font-family: 'Nunito';
+     font-weight: bold;
+     margin:10px;
+}

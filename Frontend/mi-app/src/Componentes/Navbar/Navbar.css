@@ -1,14 +1,145 @@
+/* =====================================
+   NAVBAR
+===================================== */
+
 .nav-links {
+
   display: flex;
-  gap: 20px;
-  list-style-type: none;
-  margin: 0;
-  padding: 10px;
-  background-color: #1a1b1b;
-  border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    color: #eef5f5;
-    font-weight:bolder;
-    font-size: 20px;
-    font-family: Arial, sans-serif;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+
+  padding: 14px 28px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .06);
+
+}
+
+/* =====================================
+   LOGO
+===================================== */
+
+.logo-container {
+
+  display: flex;
+
+  align-items: center;
+
+}
+
+.logo {
+
+  height: 48px;
+
+  width: auto;
+
+  object-fit: contain;
+
+  transition: .25s;
+
+}
+
+.logo:hover {
+
+  transform: scale(1.05);
+
+}
+
+/* =====================================
+   ACCIONES
+===================================== */
+
+.nav-actions {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+}
+
+/* =====================================
+   BOTÓN
+===================================== */
+
+.boton-concentrado {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  background: #2563eb;
+
+  color: white;
+
+  border: none;
+
+  border-radius: 12px;
+
+  padding: 11px 20px;
+
+  font-size: .95rem;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: .25s;
+
+  box-shadow: 0 6px 18px rgba(37, 99, 235, .25);
+
+}
+
+.boton-concentrado:hover {
+
+  background: #1d4ed8;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 10px 22px rgba(37, 99, 235, .35);
+
+}
+
+.boton-concentrado:active {
+
+  transform: scale(.98);
+
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media(max-width:768px) {
+
+  .nav-links {
+
+    padding: 14px;
+
+  }
+
+  .logo {
+
+    height: 38px;
+
+  }
+
+  .boton-concentrado {
+
+    padding: 10px 15px;
+
+    font-size: .85rem;
+
+  }
+
 }

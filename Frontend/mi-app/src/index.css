@@ -1,3 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/open-dyslexic-regular.css');
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/woff/OpenDyslexic-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.dyslexic-font {
+  font-family: 'OpenDyslexic', sans-serif !important;
+}
+
+body.modal-open {
+  overflow: auto !important;
+  padding-right: 0 !important;
+}
+
 :root {
   --text: #6b6375;
   --text-h: #08060d;
@@ -30,6 +51,7 @@
   }
 }
 
+
 @media (prefers-color-scheme: dark) {
   :root {
     --text: #9ca3af;
@@ -51,25 +73,23 @@
 }
 
 body {
-  background-color: var(--color-fondo-dinamico, #1a1a1a);
+  background-color: var(--color-fondo-dinamico, #DaE9F0);
   color: var(--color-texto-dinamico, #ffffff);
   transition: background-color 0.3s ease, color 0.3s ease;
- 
-  font-family: sans-serif;
+ color:#08060d;
+  font-family: 'Nunito';
   margin: 0;
-  padding: 20px;
+  padding: 0px;
 }
 
 #root {
-  width: 1126px;
   max-width: 100%;
   margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
+  text-align: left;
+color:white;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
 }
 
 h1,

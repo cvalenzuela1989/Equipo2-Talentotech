@@ -9,9 +9,9 @@ export const ColorContext = createContext();
 
 export const ColorProvider = ({ children }) => { 
 
-  const [colorFondo, setColorFondo] = useState("#1a1a1a");
+  const [colorFondo, setColorFondo] = useState("#1F2A44");
 
-  const [colorTexto, setColorTexto] = useState("#ffffff");
+  const [colorTexto, setColorTexto] = useState("#0b0b0c");
 
 
 
@@ -36,4 +36,3 @@ const colores = { colorFondo, setColorFondo, colorTexto, setColorTexto };
   );
 
 } 
-

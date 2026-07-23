@@ -1,120 +1,92 @@
-import { useState, useEffect, useContext } from 'react';
-import * as pdfjsLib from 'pdfjs-dist';
+import { useState, useContext } from 'react';
 import PanelHerramientas from './PanelHerramientas/PanelHerramientas.jsx';
-import HojaTexto from './HojaTexto';
+import HojaTexto from './HojaTexto/HojaTexto.jsx';
 import './style.css';
-import { ColorContext } from '../../Context/fondoContext.jsx'; // 🌟 Asegurate que combine con el nombre del export del Contexto
-
-// Configuración del Worker de PDF.js
-pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.mjs',
-  import.meta.url
-).href;
-
+import { ColorContext } from '../../Context/fondoContext.jsx';
+import { PdfContext } from '../../Context/PdfContext.jsx';
+import { MdStopCircle } from "react-icons/md";
+import './styleMenu.css';
+import FlashCard from '../FlashCard/FlashCard.jsx';
+import Cuestionario from '../Cuestionario/Cuestionario.jsx'
 export default function VisorAccesibleLTI() {
-  // 🌟 Extraemos los setters del contexto para poder mutarlos desde los botones rápidos
-  const { colorFondo, setColorFondo, colorTexto, setColorTexto } = useContext(ColorContext);
-  
-  const [studentData, setStudentData] = useState(null);
-  const [lineasTexto, setLineasTexto] = useState([]);
-  const [cargando, setCargando] = useState(false);
-  const [errorPlataforma, setErrorPlataforma] = useState(null); 
+  const { pdfData, cargando, error, userData,enviarDato } = useContext(PdfContext);
+  const { colorFondo, colorTexto } = useContext(ColorContext);
+  const [palabraBuscada, setPalabraBuscada] = useState('');
+
+
+
+  const [colorFondoPDF2, setColorFondoPDF2] = useState('#ffffff');
+  const [colorTextoPDF2, setColorTextoPDF2] = useState('#1a1a1a');
   const [tamanioLetra, setTamanioLetra] = useState(16);
   const [textoGlobalSeleccionado, setTextoGlobalSeleccionado] = useState('');
-  const [menuAbierto, setMenuAbierto] = useState(false);
-
-  // Estados para el menú contextual flotante y reproducción de voz
-  const [menuPosicion, setMenuPosicion] = useState(null); 
+  const [menuAbierto, setMenuAbierto] = useState(true);
+  const [menuPosicion, setMenuPosicion] = useState(null);
   const [reproduciendoSeleccion, setReproduciendoSeleccion] = useState(false);
+ 
+  const [ tipoLetra, setTipoLetra ] = useState('Nunito');
+  
+  const [showExplicacionModal, setShowExplicacionModal] = useState(false);
+  const [explicacionTexto, setExplicacionTexto] = useState('');
+  const [cargandoExplicacion, setCargandoExplicacion] = useState(false);
+  
+  
+  const [tipoModal, setTipoModal] = useState('explicacion');
 
-  // 1. CAPTURA DE PARÁMETROS LTI DE MOODLE
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    
-    const userId = params.get('userId');
-    const user = params.get('user');
-    const email = params.get('email');
-    const course = params.get('course');
-    const section = params.get('section');
-    const pdfUrl = params.get('pdfUrl');
-
-    if (userId && pdfUrl) {
-      setStudentData({ userId, user, email, course, section, pdfUrl });
-      window.history.replaceState({}, document.title, window.location.pathname);
+  
+  // Función para solicitar explicación de un fragmento
+  const solicitarExplicacion = async (texto) => {
+    setCargandoExplicacion(true);
+    setTipoModal('explicacion');
+    try {
+      const response = await fetch('http://localhost:8080/api/v1/explanation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+        body: texto,
+      });
+      const data = await response.text();
+      setExplicacionTexto(data || "No se recibió respuesta.");
+      setShowExplicacionModal(true);
+    } catch (error) {
+      console.error("Error al pedir explicación:", error);
+      alert("Error al conectar con el servidor.");
+    } finally {
+      setCargandoExplicacion(false);
+      setMenuPosicion(null); 
     }
-  }, []);
+  };
 
-  // 2. PROCESAMIENTO AUTOMÁTICO DEL PDF
-  useEffect(() => {
-    if (!studentData || !studentData.pdfUrl) return;
+  // --- FUNCIÓN PARA RESUMIR EL TEXTO COMPLETO ---
+  const solicitarResumen = async (textoCompleto) => {
+    setCargandoExplicacion(true);
+    setTipoModal('resumen'); 
+    try {
+      const response = await fetch('http://localhost:8080/api/v1/summarize', { 
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain', 
+        },
+        body: textoCompleto,
+      });
+      const data = await response.text();
+      setExplicacionTexto(data || "No se recibió resumen.");
+      setShowExplicacionModal(true);
+    } catch (error) {
+      console.error("Error al pedir resumen:", error);
+      alert("Error al conectar con el servidor para resumir.");
+    } finally {
+      setCargandoExplicacion(false);
+      setMenuPosicion(null);
+    }
+  };
 
-      const procesarPdfDesdeUrl = async () => {
-          setCargando(true);
-          setErrorPlataforma(null);
-          try {
-              const urlMoodleEncodada = encodeURIComponent(studentData.pdfUrl);
-              const urlTuApi = `/api/v1/view?fileUrl=${urlMoodleEncodada}`;
-
-              const res = await fetch(urlTuApi);
-              if (!res.ok) throw new Error(`Error de red: servidor respondió con estado ${res.status}`);
-        
-              const arrayBuffer = await res.arrayBuffer();
-              const decodificador = new TextDecoder("utf-8");
-              const inicioTexto = decodificador.decode(new Uint8Array(arrayBuffer.slice(0, 10))).trim();
-
-              if (!inicioTexto.startsWith("%PDF")) {
-                  const textoRespuesta = decodificador.decode(new Uint8Array(arrayBuffer));
-                  console.error("El backend no devolvió un PDF. Respuesta recibida:", textoRespuesta);
-                  try {
-                      const jsonError = JSON.parse(textoRespuesta);
-                      throw new Error(jsonError.error || "Error devuelto por la plataforma de estudio.");
-                  } catch (e) {
-                      throw new Error("El servidor no envió un documento válido.");
-                  }
-              }
-
-              const documentoPdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-              let textoAcumulado = '';
-
-              for (let i = 1; i <= documentoPdf.numPages; i++) {
-                  const pagina = await documentoPdf.getPage(i);
-                  const contenidoTexto = await pagina.getTextContent();
-                  const textoPagina = contenidoTexto.items.map(item => item.str).join(' ');
-                  textoAcumulado += textoPagina + '\n';
-              }
-
-              // 🌟 LOGICA DE FORMATEO AVANZADO:
-              // 1. Buscamos puntos seguidos de un espacio (punto y aparte/seguido significativo) y agregamos un salto.
-              // 2. Buscamos signos de interrogación de cierre (?) o exclamación (!) para segmentar oraciones interactivas.
-              let textoFormateado = textoAcumulado
-                  .replace(/\. +/g, '.\n')   // Si hay un punto seguido de uno o más espacios, mete un salto
-                  .replace(/\? +/g, '?\n')   // Si termina una pregunta y sigue texto, mete un salto
-                  .replace(/\! +/g, '!\n');  // Si termina una exclamación y sigue texto, mete un salto
-
-              // Generamos el array de líneas filtrando los renglones vacíos
-              const lineas = textoFormateado
-                  .split('\n')
-                  .map(l => l.trim())
-                  .filter(l => l.length > 0);
-          
-              setLineasTexto(lineas);
-
-          } catch (error) {
-              console.error("Error automatizado al procesar el PDF LTI:", error);
-              setErrorPlataforma(error.message);
-          } finally {
-              setCargando(false);
-          }
-      }
-    procesarPdfDesdeUrl();
-  }, [studentData]);
-
-  // Lógica de Síntesis de Voz
+  // --- LÓGICA DE VOZ Y TEMAS ---
   const leerTexto = () => {
+    if (!pdfData) return;
     speechSynthesis.cancel();
-    const textoCompleto = lineasTexto.join(' ');
-    const voz = new SpeechSynthesisUtterance(textoCompleto);
-    voz.lang = "es-AR"; 
+    const voz = new SpeechSynthesisUtterance(pdfData);
+    voz.lang = "es-AR";
     speechSynthesis.speak(voz);
   };
 
@@ -122,13 +94,10 @@ export default function VisorAccesibleLTI() {
     speechSynthesis.cancel();
     const voz = new SpeechSynthesisUtterance(texto);
     voz.lang = "es-AR";
-    
     voz.onstart = () => setReproduciendoSeleccion(true);
     voz.onend = () => setReproduciendoSeleccion(false);
-    voz.onerror = () => setReproduciendoSeleccion(false);
-
     speechSynthesis.speak(voz);
-    setMenuPosicion(null); 
+    setMenuPosicion(null);
   };
 
   const detenerTexto = () => {
@@ -136,106 +105,142 @@ export default function VisorAccesibleLTI() {
     setReproduciendoSeleccion(false);
   };
 
-  // 🌟 CORRECCIÓN: Ahora actualiza directamente las propiedades globales del contexto
-  const aplicarTema = (fondo, texto) => {
-    if (colorFondo === fondo) {
-      setImageDefault(); // Si ya está seleccionado, vuelve al original
-    } else {
-      setImageTema(fondo, texto);
-    }
+  const aplicarTemaPDF = (fondo, texto) => {
+    setColorFondoPDF2(fondo);
+    setColorTextoPDF2(texto);
   };
 
-  const setImageTema = (fondo, texto) => {
-    if (typeof setColorFondo === 'function' && typeof setColorTexto === 'function') {
-      setImageColors(fondo, texto);
-    }
+  const aplicarTemafondo = (fondo) => {
+    setColorFondoPDF2(fondo);
   };
 
-  const setImageColors = (fondo, texto) => {
-    if(typeof setColorFondo === 'function') setColorFondo(fondo);
-    if(typeof setColorTexto === 'function') setColorTexto(texto);
+  const aplicarTematexto = (texto) => {
+    setColorTextoPDF2(texto);
   };
-
-  const setImageDefault = () => {
-    if(typeof setColorFondo === 'function') setColorFondo('#ffffff');
-    if(typeof setColorTexto === 'function') setColorTexto('#334155');
+  const cambiarLetra = (letra) => {
+    setTipoLetra(letra);
   };
+ function borrarFiltros(){
+    setColorFondoPDF2('#ffffff');
+    setColorTextoPDF2('#1a1a1a');
+    setTipoLetra('sans-serif');
+    setTamanioLetra(16);
+    setPalabraBuscada(''); 
+ }
+ 
 
-  if (!studentData) {
-    return <div className="pdf-status">Esperando inicialización desde la plataforma Moodle...</div>;
-  }
-
-  if (cargando) {
-    return <div className="pdf-status">Extrayendo y optimizando el texto del documento para accesibilidad...</div>;
-  }
-
-  if (errorPlataforma) {
-    return (
-      <div className="pdf-status" style={{ color: '#ef4444', padding: '20px' }}>
-        <h3>⚠️ Error de Comunicación</h3>
-        <p>{errorPlataforma}</p>
-        <small>Asegurate de haber lanzado la sesión correctamente desde tu curso de Moodle.</small>
-      </div>
-    );
-  }
+  const manejarBusqueda = (datosFormulario) => {
+  setPalabraBuscada(datosFormulario); 
+};
+  if (cargando) return <div className="pdf-status">Extrayendo y optimizando el texto para accesibilidad...</div>;
+  if (error) return <div className="pdf-status" style={{ color: '#ef4444', padding: '20px' }}><h3>⚠️ Error</h3><p>{error}</p></div>;
 
   return (
-    <div className="visor-container" style={{ padding: '20px' }} onClick={() => setMenuPosicion(null)}>
-      {lineasTexto.length > 0 ? (
+    <div className="visor-container" style={{ padding: '20px', 
+      backgroundColor: colorFondo, 
+      color: colorTexto, 
+      minHeight: '100vh', 
+      transition: 'background-color 0.3s ease',
+      fontFamily:tipoLetra
+    }} onClick={() => setMenuPosicion(null)}>
+      {pdfData ? (
         <>
-          <div className="info-lti-header" style={{ marginBottom: '15px', color: colorTexto }}>
-            <h2>{studentData.section || 'Documento del Curso'}</h2>
-            <p>Usuario: {studentData.user} | Curso: {studentData.course}</p>
+          <div className="info-lti-header text-amber-50" style={{ marginBottom: '15px', color:"#0e0707" }}>
+            
           </div>
-
-          <div style={{ margin: '15px 0', textAlign: 'right' }}>
-            <button className="boton-accesible" onClick={() => setMenuAbierto(true)}>
-              ⚙️ Configuración Accesibilidad
-            </button>
+          
+          <div className='botonera'>
+            <button className="boton-accesible" onClick={() => setMenuAbierto(true)}>⚙️ Abrir Menú</button>
+            <button className="boton-accesible2" onClick={() => setMenuAbierto(false)}>⚙️ Cerrar Menú</button>
+         
           </div>
+          
+         {reproduciendoSeleccion && (
+    <button
+        className="btn-detener-lectura"
+        onClick={detenerTexto}
+    >
+        <MdStopCircle size={22} />
+        <span>Detener lectura</span>
+    </button>
+)}
 
-          {reproduciendoSeleccion && (
-            <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 2000, boxShadow: '0 4px 15px rgba(0,0,0,0.3)' }}>
-              <button className="boton-dinamico" onClick={detenerTexto}>
-                🛑 Detener Lectura
-              </button>
-            </div>
-          )}
-
+        
           {menuPosicion && (
             <div 
-              style={{ position: 'fixed', top: `${menuPosicion.y}px`, left: `${menuPosicion.x}px`, background: '#22252a', color: '#fff', border: '1px solid #444', borderRadius: '6px', padding: '5px 0', zIndex: 1500, boxShadow: '0 4px 10px rgba(0,0,0,0.5)' }}
-              onClick={(e) => e.stopPropagation()}
+                className="menu-flotante" 
+                style={{ 
+                    top: menuPosicion.y, 
+                    left: menuPosicion.x 
+                }}
             >
-              <button className="boton-dinamico-escuchar" onClick={() => leerTextoSeleccionado(textoGlobalSeleccionado)}>
-                📢 Escuchar Selección
-              </button>
+                <button 
+                    className="btn-menu-escuchar"
+                    onClick={() => leerTextoSeleccionado(textoGlobalSeleccionado)}
+                >
+                    <span role="img" aria-label="megáfono">📢</span> Escuchar
+                </button>
+
+                <button 
+                    className="btn-menu-explicar"
+                    onClick={() => solicitarExplicacion(textoGlobalSeleccionado)} 
+                    disabled={cargandoExplicacion}
+                >
+                    <span role="img" aria-label="varita mágica">✨</span> 
+                    {cargandoExplicacion && tipoModal === 'explicacion' ? "Procesando..." : "Explícamelo"}
+                </button>
             </div>
           )}
 
           <PanelHerramientas
-            show={menuAbierto}
-            handleClose={() => setMenuAbierto(false)}
-            tamanioLetra={tamanioLetra}
-            setTamanioLetra={setTamanioLetra}
-            alEscuchar={leerTexto}
-            alDetener={detenerTexto}
-            aplicarTema={aplicarTema}
+             aplicarTemaFondo={aplicarTemafondo}
+             aplicarTemaTexto={aplicarTematexto}
+             aplicarTemaPDF={aplicarTemaPDF} 
+             show={menuAbierto}
+             handleClose={() => setMenuAbierto(false)}
+             tamanioLetra={tamanioLetra}
+             setTamanioLetra={setTamanioLetra}
+             alEscuchar={leerTexto}
+             alDetener={detenerTexto}
+            solicitarResumen={solicitarResumen}
+            cambiarLetra={cambiarLetra}
+            borrarFiltros={borrarFiltros}
+            manejarBusqueda={manejarBusqueda}
+            enviarDato={enviarDato}
+           
           />
 
-          {/* 🌟 Pasamos de forma transparente las variables del Contexto */}
-          <HojaTexto
-            lineasTexto={lineasTexto}
-            colorFondo={colorFondo}
-            colorTexto={colorTexto}
-            tamanioLetra={tamanioLetra}
-            setTextoGlobalSeleccionado={setTextoGlobalSeleccionado}
-            setMenuPosicion={setMenuPosicion}
-          />
+   
+<HojaTexto
+    colorFondoPDF={colorFondoPDF2}
+    colorTextoPDF={colorTextoPDF2}
+    lineasTexto={pdfData.split('\n')}
+    colorFondo={colorFondo}
+    colorTexto={colorTexto}
+    tamanioLetra={tamanioLetra}
+    setTextoGlobalSeleccionado={setTextoGlobalSeleccionado}
+    setMenuPosicion={setMenuPosicion}
+    palabraBuscada={palabraBuscada} 
+/>
+<div id="contenedor-herramientas" style={{ marginTop: '40px' }}>
+    <FlashCard />
+    <Cuestionario />
+</div>
+       
+          {showExplicacionModal && (
+    <div className="modal-overlay" onClick={() => setShowExplicacionModal(false)}>
+        <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <h3>{tipoModal === 'resumen' ? 'Resumen del documento' : 'Explicación del fragmento'}</h3>
+            <p style={{ whiteSpace: 'pre-wrap' }}>{explicacionTexto}</p>
+            <button onClick={() => setShowExplicacionModal(false)}>Cerrar</button>
+        </div>
+    </div>
+)}
         </>
       ) : (
-        <div className="pdf-status">El archivo está vacío o no contiene capas de texto procesables.</div>
+        <div className="pdf-status">No hay documento para mostrar.</div>
       )}
     </div>
   );
+  
 }

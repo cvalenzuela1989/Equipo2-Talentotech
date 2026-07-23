@@ -1,0 +1,165 @@
+
+
+.tipografia-card {
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 18px;
+
+    padding: 22px;
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+
+}
+
+
+
+.tipografia-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 10px;
+
+}
+
+.titulo-icono {
+
+    font-size: 26px;
+
+    color: #2563eb;
+
+}
+
+.tipografia-header h5 {
+
+    margin: 0;
+
+    font-size: 1rem;
+
+    font-weight: 700;
+
+    color: #1f2937;
+
+}
+
+
+
+.tipografia-descripcion {
+
+    margin-bottom: 20px;
+
+    color: #6b7280;
+
+    font-size: .88rem;
+
+}
+
+
+
+.tipografia-lista {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+
+}
+
+
+
+.btn-tipografia {
+
+    width: 100%;
+
+    background: #f8fafc;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    padding: 15px 18px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    cursor: pointer;
+
+    transition: .25s;
+
+}
+
+.btn-tipografia:hover {
+
+    background: #eff6ff;
+
+    border-color: #2563eb;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 18px rgba(37, 99, 235, .15);
+
+}
+
+
+
+.tipografia-info {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+}
+
+.tipografia-info svg {
+
+    font-size: 24px;
+
+    color: #2563eb;
+
+}
+
+.tipografia-info strong {
+
+    display: block;
+
+    color: #111827;
+
+    font-size: .95rem;
+
+}
+
+.tipografia-info small {
+
+    color: #6b7280;
+
+    font-size: .75rem;
+
+}
+
+
+
+.check-icono {
+
+    color: #9ca3af;
+
+    font-size: 22px;
+
+}
+
+.btn-tipografia:hover .check-icono {
+
+    color: #2563eb;
+
+}

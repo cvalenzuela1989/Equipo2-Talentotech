@@ -1,0 +1,175 @@
+/*=========================================
+    CONTENEDOR
+=========================================*/
+
+.buscar-container {
+
+    background: #f8fafc;
+
+    border-radius: 18px;
+
+    padding: 24px;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .08);
+
+}
+
+/*=========================================
+    CABECERA
+=========================================*/
+
+.buscar-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 10px;
+
+}
+
+.buscar-icono {
+
+    font-size: 30px;
+
+    color: #2563eb;
+
+}
+
+.buscar-header h5 {
+
+    margin: 0;
+
+    font-size: 1.15rem;
+
+    font-weight: 700;
+
+    color: #1f2937;
+
+}
+
+.buscar-descripcion {
+
+    color: #6b7280;
+
+    font-size: .92rem;
+
+    margin-bottom: 18px;
+
+}
+
+/*=========================================
+    FORMULARIO
+=========================================*/
+
+.buscar-form {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+/*=========================================
+    INPUT
+=========================================*/
+
+.buscar-input {
+
+    flex: 1;
+
+    padding: 12px 16px;
+
+    border: 2px solid #d1d5db;
+
+    border-radius: 12px;
+
+    font-size: .95rem;
+
+    outline: none;
+
+    transition: .25s;
+
+    background: white;
+
+}
+
+.buscar-input:focus {
+
+    border-color: #2563eb;
+
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, .15);
+
+}
+
+/*=========================================
+    BOTÓN
+=========================================*/
+
+.buscar-btn {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 12px 18px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+
+    color: white;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .25s;
+
+    box-shadow: 0 6px 16px rgba(37, 99, 235, .25);
+
+}
+
+.buscar-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 10px 20px rgba(37, 99, 235, .35);
+
+}
+
+.buscar-btn:active {
+
+    transform: scale(.97);
+
+}
+
+/*=========================================
+    RESPONSIVE
+=========================================*/
+
+@media(max-width:650px) {
+
+    .buscar-form {
+
+        flex-direction: column;
+
+    }
+
+    .buscar-btn {
+
+        width: 100%;
+
+        justify-content: center;
+
+    }
+
+}

@@ -1,0 +1,208 @@
+.flashcards-page {
+
+    max-width: 1400px;
+
+    margin: auto;
+
+    padding: 40px;
+
+}
+
+/*************************/
+
+.flash-header {
+
+    text-align: center;
+
+    margin-bottom: 45px;
+
+}
+
+.flash-header h2 {
+
+    font-size: 2rem;
+
+    color: #1e293b;
+
+}
+
+.flash-header p {
+
+    color: #64748b;
+
+    margin-top: 8px;
+
+}
+
+/*************************/
+
+.btn-generar {
+
+    margin-top: 25px;
+
+    padding: 15px 35px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .25s;
+
+    box-shadow: 0 12px 25px rgba(37, 99, 235, .25);
+
+}
+
+.btn-generar:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 18px 35px rgba(37, 99, 235, .35);
+
+}
+
+/*************************/
+
+.flash-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+    gap: 35px;
+
+}
+
+/*************************/
+
+.flashcard {
+
+    perspective: 1000px;
+
+    height: 260px;
+
+    cursor: pointer;
+
+}
+
+.flash-inner {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 100%;
+
+    transition: transform .7s;
+
+    transform-style: preserve-3d;
+
+}
+
+.flashcard.volteada .flash-inner {
+
+    transform: rotateY(180deg);
+
+}
+
+/*************************/
+
+.flash-front,
+.flash-back {
+
+    position: absolute;
+
+    width: 100%;
+
+    height: 100%;
+
+    backface-visibility: hidden;
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .12);
+
+}
+
+.flash-front {
+
+    background: white;
+
+}
+
+.flash-back {
+
+    background: linear-gradient(135deg, #2563eb, #4338ca);
+
+    color: white;
+
+    transform: rotateY(180deg);
+
+}
+
+/*************************/
+
+.numero {
+
+    font-size: .8rem;
+
+    text-transform: uppercase;
+
+    color: #64748b;
+
+    margin-bottom: 15px;
+
+    font-weight: bold;
+
+}
+
+.flash-back .numero {
+
+    color: #dbeafe;
+
+}
+
+.flash-front h4 {
+
+    font-size: 1.3rem;
+
+    color: #1e293b;
+
+}
+
+.flash-back p {
+
+    font-size: 1rem;
+
+    line-height: 1.6;
+
+}
+
+/*************************/
+
+.flashcard:hover {
+
+    transform: translateY(-6px);
+
+}

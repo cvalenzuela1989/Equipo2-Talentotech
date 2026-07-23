@@ -1,0 +1,132 @@
+/* ====================================
+   CONTENEDOR DEL DOCUMENTO
+==================================== */
+
+.texto-dinamico {
+
+    max-width: 900px;
+
+    margin: 35px auto;
+
+    padding: 50px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 8px 28px rgba(0, 0, 0, .12);
+
+    line-height: 1.8;
+
+    text-align: justify;
+
+    word-break: break-word;
+
+    transition:
+        background-color .3s,
+        color .3s,
+        font-size .2s;
+
+    cursor: text;
+
+    user-select: text;
+
+}
+
+/* ====================================
+   TITULOS
+==================================== */
+
+.titulo-pdf {
+
+    margin-top: 35px;
+
+    margin-bottom: 18px;
+
+    font-weight: 700;
+
+    border-left: 5px solid #2563eb;
+
+    padding-left: 14px;
+
+    letter-spacing: .5px;
+
+}
+
+/* ====================================
+   PÁRRAFOS
+==================================== */
+
+.parrafo-pdf {
+
+    margin-bottom: 14px;
+
+    text-indent: 25px;
+
+    line-height: 1.8;
+
+}
+
+/* ====================================
+   SELECCIÓN DE TEXTO
+==================================== */
+
+.texto-dinamico::selection {
+
+    background: #2563eb;
+
+    color: white;
+
+}
+
+.texto-dinamico ::selection {
+
+    background: #2563eb;
+
+    color: white;
+
+}
+
+/* ====================================
+   SCROLL
+==================================== */
+
+.texto-dinamico::-webkit-scrollbar {
+
+    width: 8px;
+
+}
+
+.texto-dinamico::-webkit-scrollbar-thumb {
+
+    background: #cbd5e1;
+
+    border-radius: 20px;
+
+}
+
+/* ====================================
+   EFECTO HOVER
+==================================== */
+
+.texto-dinamico:hover {
+
+    box-shadow:
+        0 14px 35px rgba(0, 0, 0, .16);
+
+}
+
+/* ====================================
+   RESPONSIVE
+==================================== */
+
+@media(max-width:900px) {
+
+    .texto-dinamico {
+
+        margin: 15px;
+
+        padding: 25px;
+
+    }
+
+}

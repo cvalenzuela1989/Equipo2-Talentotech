@@ -1,0 +1,141 @@
+/* ================================
+        TARJETA
+================================ */
+
+.resumen-card {
+
+    width: 100%;
+
+    background: #f8fafc;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 18px;
+
+    padding: 22px;
+
+    box-shadow: 0 8px 18px rgba(0, 0, 0, .08);
+
+    transition: .25s;
+
+}
+
+.resumen-card:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 14px 28px rgba(0, 0, 0, .12);
+
+}
+
+/* ================================
+        CABECERA
+================================ */
+
+.resumen-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    margin-bottom: 20px;
+
+}
+
+.resumen-icono {
+
+    font-size: 42px;
+
+    color: #8b5cf6;
+
+    background: #ede9fe;
+
+    padding: 10px;
+
+    border-radius: 14px;
+
+}
+
+.resumen-header h5 {
+
+    margin: 0;
+
+    font-size: 1.1rem;
+
+    font-weight: 700;
+
+    color: #111827;
+
+}
+
+.resumen-header p {
+
+    margin-top: 4px;
+
+    color: #6b7280;
+
+    font-size: .88rem;
+
+}
+
+/* ================================
+        BOTÓN
+================================ */
+
+.btn-resumen {
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    font-size: 1rem;
+
+    font-weight: 600;
+
+    color: white;
+
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+
+    box-shadow: 0 8px 18px rgba(99, 102, 241, .30);
+
+    transition: .25s;
+
+}
+
+.btn-resumen:hover {
+
+    transform: translateY(-2px);
+
+    background: linear-gradient(135deg, #6d28d9, #4338ca);
+
+    box-shadow: 0 12px 24px rgba(99, 102, 241, .40);
+
+}
+
+.btn-resumen:active {
+
+    transform: scale(.98);
+
+}
+
+.btn-resumen svg {
+
+    font-size: 24px;
+
+}

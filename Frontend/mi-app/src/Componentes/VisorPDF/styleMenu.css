@@ -1,0 +1,168 @@
+/* =====================================
+   MENÚ CONTEXTUAL
+===================================== */
+
+.menu-flotante {
+
+    position: fixed;
+
+    z-index: 9999;
+
+    min-width: 240px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 16px;
+
+    padding: 10px;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, .18);
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+    animation: menuEntrada .18s ease;
+
+    user-select: none;
+
+}
+
+/* =====================================
+   ANIMACIÓN
+===================================== */
+
+@keyframes menuEntrada {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(8px) scale(.96);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0) scale(1);
+
+    }
+
+}
+
+/* =====================================
+   BOTONES
+===================================== */
+
+.menu-flotante button {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 13px 16px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    font-size: .95rem;
+
+    font-weight: 500;
+
+    transition: .25s;
+
+}
+
+/* =====================================
+   ESCUCHAR
+===================================== */
+
+.btn-menu-escuchar {
+
+    background: #ecfdf5;
+
+    color: #047857;
+
+}
+
+.btn-menu-escuchar:hover {
+
+    background: #10b981;
+
+    color: white;
+
+    transform: translateX(3px);
+
+}
+
+/* =====================================
+   EXPLICAR
+===================================== */
+
+.btn-menu-explicar {
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+}
+
+.btn-menu-explicar:hover {
+
+    background: #2563eb;
+
+    color: white;
+
+    transform: translateX(3px);
+
+}
+
+/* =====================================
+   DESHABILITADO
+===================================== */
+
+.btn-menu-explicar:disabled {
+
+    background: #f3f4f6;
+
+    color: #9ca3af;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+}
+
+/* =====================================
+   ICONOS
+===================================== */
+
+.menu-flotante button span {
+
+    font-size: 20px;
+
+}
+
+/* =====================================
+   EFECTO CLICK
+===================================== */
+
+.menu-flotante button:active {
+
+    transform: scale(.98);
+
+}
