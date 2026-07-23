@@ -1,0 +1,158 @@
+.tamaño-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #204b75;
+    padding: 10px;
+    border-radius: 8px;
+    gap: 15px;
+    justify-content: center;
+   
+}
+
+
+.botones-tamano {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.valor-px {
+    font-weight: bold;
+    min-width: 45px;
+    text-align: center;
+}
+
+.selector-texto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.selector-texto label {
+    font-size: 10px;
+    color: #64748b;
+    text-transform: uppercase;
+}
+        .boton-accesible {
+            background: #2c5fd6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+            margin: 5px;
+        }
+        .boton-accesible2 {
+            background: #f85454;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+            margin: 5px;
+        }
+        .boton-accesible:hover {
+            background: #1a3bb8;
+        }
+        .boton-accesible2:hover {
+            background: #c0392b;}
+.visor-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    width: 1126px;
+    margin: 0 auto;
+    
+    font-family: 'Nunito';
+        
+
+    text-align: center;
+   
+}
+.botonera{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.boton-concentrado{
+    background: #38393d;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background 0.3s;
+        margin: 5px;
+    
+    }
+.menu{
+        display:flex;
+    }
+    
+    
+        .btn-detener-lectura {
+    
+            display: flex;
+    
+            align-items: center;
+    
+            justify-content: center;
+    
+            gap: 10px;
+    
+            margin: 18px auto;
+    
+            padding: 14px 24px;
+    
+            border: none;
+    
+            border-radius: 14px;
+    
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+    
+            color: white;
+    
+            font-size: .95rem;
+    
+            font-weight: 600;
+    
+            cursor: pointer;
+    
+            box-shadow: 0 8px 20px rgba(239, 68, 68, .30);
+    
+            transition: all .25s ease;
+    
+        }
+    
+        .btn-detener-lectura:hover {
+    
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+    
+            transform: translateY(-2px);
+    
+            box-shadow: 0 12px 24px rgba(239, 68, 68, .45);
+    
+        }
+    
+        .btn-detener-lectura:active {
+    
+            transform: scale(.97);
+    
+        }
+    
+        .btn-detener-lectura svg {
+    
+            font-size: 24px;
+    
+        }
