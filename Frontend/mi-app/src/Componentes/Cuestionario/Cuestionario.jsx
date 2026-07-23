@@ -17,7 +17,8 @@ function Cuestionario() {
   if (!resultado?.quiz) return null;
 
   return (
-    // 🔹 Ocultamos con display: none en vez de desmontar con null
+   
+      
     <div className="contenedor-cuestionario" style={{ display: visible ? 'block' : 'none' }}>
       <div className="encabezado-cuestionario">
         <h2>📝 Cuestionario</h2>

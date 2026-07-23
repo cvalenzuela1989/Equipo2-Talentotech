@@ -3,7 +3,7 @@
 import {
   MdTextFields,
   MdFontDownload,
-  MdCheck
+ 
 } from "react-icons/md";
 
 import "./style.css";

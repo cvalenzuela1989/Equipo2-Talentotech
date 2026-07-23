@@ -3,7 +3,7 @@ import { ColorContext } from "../../Context/fondoContext";
 import './style.css';
 function PaletaColor() {    
  
-  const { colorFondo, setColorFondo, colorTexto, setColorTexto } = useContext(ColorContext);
+  const { colorFondo, setColorFondo } = useContext(ColorContext);
 
   return (
     <div> 

@@ -9,7 +9,7 @@ import './styleMenu.css';
 import FlashCard from '../FlashCard/FlashCard.jsx';
 import Cuestionario from '../Cuestionario/Cuestionario.jsx'
 export default function VisorAccesibleLTI() {
-  const { pdfData, cargando, error, userData,enviarDato } = useContext(PdfContext);
+  const { pdfData, cargando, error,enviarDato } = useContext(PdfContext);
   const { colorFondo, colorTexto } = useContext(ColorContext);
   const [palabraBuscada, setPalabraBuscada] = useState('');
 
@@ -70,7 +70,8 @@ export default function VisorAccesibleLTI() {
         body: textoCompleto,
       });
       const data = await response.text();
-      setExplicacionTexto(data || "No se recibió resumen.");
+     
+      setExplicacionTexto(data || "No se recibió resumen."); 
       setShowExplicacionModal(true);
     } catch (error) {
       console.error("Error al pedir resumen:", error);
@@ -120,6 +121,7 @@ export default function VisorAccesibleLTI() {
   const cambiarLetra = (letra) => {
     setTipoLetra(letra);
   };
+  //limpiar herramienta
  function borrarFiltros(){
     setColorFondoPDF2('#ffffff');
     setColorTextoPDF2('#1a1a1a');
@@ -176,8 +178,10 @@ export default function VisorAccesibleLTI() {
             >
                 <button 
                     className="btn-menu-escuchar"
-                    onClick={() => leerTextoSeleccionado(textoGlobalSeleccionado)}
-                >
+                onClick={() => leerTextoSeleccionado(textoGlobalSeleccionado)}
+                
+              >
+                
                     <span role="img" aria-label="megáfono">📢</span> Escuchar
                 </button>
 

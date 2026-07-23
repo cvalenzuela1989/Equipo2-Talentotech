@@ -1,21 +1,21 @@
 import { useState } from 'react';
-import './style.css'; // O tus estilos correspondientes
+import './style.css'; 
 
 function User({ userData }) {
     const [isOpen, setIsOpen] = useState(false);
-    const {user, email} =userData
+    const {user} =userData
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   return (
     <div className="menu-container">
-      {/* Botón principal que activa el menú */}
+    
       <button onClick={toggleMenu} className="menu-trigger-btn">
               {user} ▾
       </button>
 
-      {/* Menú desplegable condicional */}
+     
       {isOpen && (
         <div className="dropdown-menu">
           <button onClick={() => { alert('Perfil'); setIsOpen(false); }}>

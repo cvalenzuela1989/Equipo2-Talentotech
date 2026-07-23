@@ -38,7 +38,7 @@ export default function PanelHerramientas({
 }) {
   const [submenuAbierto, setSubmenuAbierto] = useState(null);
   
-  // Consumimos la función del contexto global
+
   const { enviarDatoFlashCars } = useContext(PdfContext);
 
   return (
@@ -242,7 +242,7 @@ export default function PanelHerramientas({
             await enviarDatoFlashCars();
             handleClose();
 
-            // 🔹 Aumentamos a 300ms para que el Offcanvas termine de cerrarse del todo
+           
             setTimeout(() => {
                 requestAnimationFrame(() => {
                     const seccion = document.getElementById("contenedor-herramientas");
@@ -266,7 +266,7 @@ export default function PanelHerramientas({
             await enviarDato(e);
             handleClose();
 
-            // 🔹 Mismo cambio acá (300ms)
+          
             setTimeout(() => {
                 requestAnimationFrame(() => {
                     const seccion = document.getElementById("contenedor-herramientas");

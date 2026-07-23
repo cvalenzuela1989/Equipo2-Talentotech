@@ -1,4 +1,4 @@
-import React from 'react';
+
 
 export default function HojaTexto({
   colorFondoPDF,
@@ -43,6 +43,7 @@ export default function HojaTexto({
         borderRadius: '8px',
         lineHeight: '1.6'
       }}
+      onContextMenu={(e) => e.preventDefault()}
       onMouseUp={handleMouseUp}
     >
       {lineasTexto.map((linea, index) => (
