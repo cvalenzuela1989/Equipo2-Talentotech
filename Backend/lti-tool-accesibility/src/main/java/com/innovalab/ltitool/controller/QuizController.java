@@ -4,21 +4,22 @@ import com.innovalab.ltitool.service.AiService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
-@RequestMapping("/api/v1/summarize")
+@RequestMapping("/api/v1/quiz")
 @CrossOrigin(origins = "${app.react-url}")
-public class SummarizeController {
+public class QuizController {
 
     private final AiService aiService;
 
-    public SummarizeController(AiService aiService) {
+    public QuizController(AiService aiService) {
         this.aiService = aiService;
     }
 
     @PostMapping
-    public ResponseEntity<String> summarizeText(@RequestBody String text) {
+    public ResponseEntity<String> generateQuiz(@RequestBody String text) {
 
-        String summarizedText = aiService.summarizeText(text);
-        return ResponseEntity.ok(summarizedText);
+        String generatedQuiz = aiService.generateQuizFromText(text);
+        return ResponseEntity.ok(generatedQuiz);
     }
 }
