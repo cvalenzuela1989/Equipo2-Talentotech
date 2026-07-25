@@ -13,7 +13,7 @@ const Navbar = () => {
 
     <div className="logo-container">
         <img
-            src="../../../public/Nexa-Logo.png"
+            src="/Nexa-Logo.png" 
             className="logo"
             alt="Logo Nexa"
         />

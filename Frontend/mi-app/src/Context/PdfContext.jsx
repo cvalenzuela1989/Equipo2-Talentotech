@@ -88,8 +88,9 @@ export const PdfProvider = ({ children }) => {
         setError(null);
         try {
             const urlMoodleEncodada = encodeURIComponent(url);
-            const res = await fetch(`/api/v1/view?fileUrl=${urlMoodleEncodada}`);
-         
+            const baseUrl = import.meta.env.VITE_BACKEND_URL || ''; 
+            const urlTuApi = `${baseUrl}/api/v1/view?fileUrl=${urlMoodleEncodada}`; 
+         	const res = await fetch(urlTuApi);
             if (!res.ok) throw new Error("Error al obtener el PDF");
 
             const arrayBuffer = await res.arrayBuffer();
@@ -143,7 +144,9 @@ export const PdfProvider = ({ children }) => {
   const enviarDatoFlashCars = async () => {
     if (!pdfData) return;
     try {
-        const responseFlashCars = await fetch('http://localhost:8080/api/v1/flashcards', {
+		const baseUrl = import.meta.env.VITE_BACKEND_URL || ''; 
+        const urlTuApi = `${baseUrl}/api/v1/flashcards`;
+        const responseFlashCars = await fetch(urlTuApi, {
             method: 'POST',
             headers: { 'Content-Type': 'text/plain' },
             body: pdfData,
@@ -177,7 +180,9 @@ const enviarDato = async (e) => {
     e.preventDefault();
 
     try {
-        const response = await fetch('http://localhost:8080/api/v1/quiz', {
+		const baseUrl = import.meta.env.VITE_BACKEND_URL || ''; 
+        const urlTuApi = `${baseUrl}/api/v1/quiz`;
+        const response = await fetch(urlTuApi, {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain',

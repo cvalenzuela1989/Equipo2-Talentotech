@@ -38,7 +38,9 @@ export default function VisorAccesibleLTI() {
     setCargandoExplicacion(true);
     setTipoModal('explicacion');
     try {
-      const response = await fetch('http://localhost:8080/api/v1/explanation', {
+		const baseUrl = import.meta.env.VITE_BACKEND_URL || ''; 
+        const urlTuApi = `${baseUrl}/api/v1/explanation`;
+        const response = await fetch(urlTuApi, {
         method: 'POST',
         headers: {
           'Content-Type': 'text/plain',
@@ -62,7 +64,9 @@ export default function VisorAccesibleLTI() {
     setCargandoExplicacion(true);
     setTipoModal('resumen'); 
     try {
-      const response = await fetch('http://localhost:8080/api/v1/summarize', { 
+		const baseUrl = import.meta.env.VITE_BACKEND_URL || ''; 
+        const urlTuApi = `${baseUrl}/api/v1/summarize`;
+        const response = await fetch(urlTuApi, {
         method: 'POST',
         headers: {
           'Content-Type': 'text/plain', 
