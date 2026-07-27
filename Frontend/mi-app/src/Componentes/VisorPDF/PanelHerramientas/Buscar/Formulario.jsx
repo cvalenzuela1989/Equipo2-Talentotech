@@ -27,7 +27,7 @@ const Formulario = ({ manejarBusqueda }) => {
                 type="text"
                 value={form}
                 onChange={handleChange}
-                placeholder="Buscar en el documento..."
+                placeholder="Buscar palabra"
                 className="buscar-input"
             />
 

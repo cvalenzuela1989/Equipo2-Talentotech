@@ -1,9 +1,6 @@
-/* =====================================
-   NAVBAR
-===================================== */
+
 
 .nav-links {
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -12,47 +9,64 @@
 
   padding: 14px 28px;
 
-  background: #ffffff;
+  background: #D9FFF7;
 
   border-bottom: 1px solid #e5e7eb;
 
-  box-shadow: 0 2px 12px rgba(0, 0, 0, .06);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, .05);
 
+  position: relative;
+
+  z-index: 100;
 }
 
-/* =====================================
-   LOGO
-===================================== */
+
 
 .logo-container {
-
   display: flex;
-
   align-items: center;
-
 }
 
 .logo {
-
-  height: 48px;
-
-  width: auto;
-
-  object-fit: contain;
-
+  height: 46px;
   transition: .25s;
-
+  object-fit: contain;
 }
 
 .logo:hover {
+  transform: scale(1.04);
+}
 
-  transform: scale(1.05);
+
+
+.nav-toggle {
+
+  display: none;
+
+  background: none;
+
+  border: none;
+
+  cursor: pointer;
+
+  color: #1f2937;
+
+  padding: 6px;
+
+  border-radius: 10px;
+
+  transition: .2s;
+}
+
+.nav-toggle:hover {
+
+  background: #f3f4f6;
+
+  color: #2563eb;
 
 }
 
-/* =====================================
-   ACCIONES
-===================================== */
+
 
 .nav-actions {
 
@@ -60,15 +74,29 @@
 
   align-items: center;
 
-  gap: 18px;
+  gap: 15px;
 
 }
 
-/* =====================================
-   BOTÓN
-===================================== */
 
+
+
+.boton-menu-herramientas,
 .boton-concentrado {
+
+  border: none;
+
+  cursor: pointer;
+
+  border-radius: 12px;
+
+  padding: 11px 18px;
+
+  font-weight: 600;
+
+  font-size: .92rem;
+
+  transition: .25s;
 
   display: flex;
 
@@ -78,25 +106,35 @@
 
   gap: 8px;
 
-  background: #2563eb;
+  white-space: nowrap;
+
+}
+
+.boton-menu-herramientas {
+
+  background: #2A576A;
 
   color: white;
 
-  border: none;
+  box-shadow: 0 6px 18px rgba(17, 24, 39, .18);
 
-  border-radius: 12px;
+}
 
-  padding: 11px 20px;
+.boton-menu-herramientas:hover {
 
-  font-size: .95rem;
+  background: #000;
 
-  font-weight: 600;
+  transform: translateY(-2px);
 
-  cursor: pointer;
+}
 
-  transition: .25s;
+.boton-concentrado {
 
-  box-shadow: 0 6px 18px rgba(37, 99, 235, .25);
+   background: #2A576A;
+
+  color: white;
+
+  box-shadow: 0 6px 18px rgba(37, 99, 235, .20);
 
 }
 
@@ -106,25 +144,56 @@
 
   transform: translateY(-2px);
 
-  box-shadow: 0 10px 22px rgba(37, 99, 235, .35);
-
 }
 
+.boton-menu-herramientas:active,
 .boton-concentrado:active {
 
-  transform: scale(.98);
+  transform: scale(.97);
 
 }
 
-/* =====================================
-   RESPONSIVE
-===================================== */
+
+
+
+@media(max-width:992px) {
+
+  .logo {
+
+    height: 42px;
+
+  }
+
+  .nav-links {
+
+    padding: 12px 18px;
+
+  }
+
+  .nav-actions {
+
+    gap: 10px;
+
+  }
+
+  .boton-menu-herramientas,
+  .boton-concentrado {
+
+    padding: 10px 14px;
+
+    font-size: .86rem;
+
+  }
+
+}
+
+
 
 @media(max-width:768px) {
 
   .nav-links {
 
-    padding: 14px;
+    padding: 12px 16px;
 
   }
 
@@ -134,11 +203,109 @@
 
   }
 
+  .nav-toggle {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+  }
+
+  .nav-actions {
+
+    position: absolute;
+
+    top: calc(100% + 10px);
+
+    left: 12px;
+
+    right: 12px;
+
+    width: auto;
+
+    background: rgba(255, 255, 255, .96);
+
+    backdrop-filter: blur(14px);
+
+    border-radius: 18px;
+
+    border: 1px solid rgba(229, 231, 235, .9);
+
+    box-shadow: 0 15px 35px rgba(0, 0, 0, .12);
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 12px;
+
+    padding: 18px;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform: translateY(-10px);
+
+    transition: .25s;
+
+  }
+
+  .nav-actions.open {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform: translateY(0);
+
+  }
+
+  .boton-menu-herramientas,
   .boton-concentrado {
 
-    padding: 10px 15px;
+    width: 100%;
 
-    font-size: .85rem;
+    justify-content: center;
+
+  }
+
+}
+
+
+
+@media(max-width:480px) {
+
+  .nav-links {
+
+    padding: 10px 14px;
+
+  }
+
+  .logo {
+
+    height: 34px;
+
+  }
+
+  .nav-actions {
+
+    left: 8px;
+
+    right: 8px;
+
+    padding: 14px;
+
+  }
+
+  .boton-menu-herramientas,
+  .boton-concentrado {
+
+    font-size: .82rem;
+
+    padding: 11px;
 
   }
 

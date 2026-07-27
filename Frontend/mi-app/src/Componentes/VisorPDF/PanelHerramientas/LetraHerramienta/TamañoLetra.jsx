@@ -3,7 +3,7 @@ import './styleLetra.css';
 
 const TamañoLetra = ({ tamaño, setTamaño, aplicarTemaTexto, colorTextoPDF }) => {
     return (
-        <div className="grupo-control">
+        <div className="grupo-control ">
 
     <h5 className="flex ">
         <MdFormatSize style={{marginRight:8}}/>
@@ -12,7 +12,7 @@ const TamañoLetra = ({ tamaño, setTamaño, aplicarTemaTexto, colorTextoPDF }) 
 
     <div className="tamaño-container">
 
-        <div className="botones-tamano">
+        <div className="botones-tamano ">
 
             <button
                 className="boton"

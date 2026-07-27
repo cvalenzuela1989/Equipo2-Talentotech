@@ -51,7 +51,7 @@ export default function PanelHerramientas({
       className="panel-accesibilidad"
     >
       <Offcanvas.Header closeButton>
-        <Offcanvas.Title>Opciones de Accesibilidad</Offcanvas.Title>
+        <Offcanvas.Title className="titulo">Opciones de Accesibilidad</Offcanvas.Title>
       </Offcanvas.Header>
 
       <Offcanvas.Body className="panel-body">
@@ -66,7 +66,7 @@ export default function PanelHerramientas({
             <div className="menu-info">
               <MdBuild className="menu-icono" />
               <div>
-                <h6>Herramientas IA</h6>
+                <h6 className="tituloia" >Herramientas IA</h6>
                 <small> </small>
               </div>
             </div>
@@ -219,9 +219,11 @@ export default function PanelHerramientas({
               )}
 
               {submenuAbierto === "herramientas" && (
-                <>
+              <>
+
+                
                   <Resumen solicitarResumen={solicitarResumen} />
-                  
+                 
                   <hr style={{ margin: '20px 0' }} />
                   
    <div className="ia-card">
@@ -243,41 +245,22 @@ export default function PanelHerramientas({
             handleClose();
 
            
-            setTimeout(() => {
-                requestAnimationFrame(() => {
-                    const seccion = document.getElementById("contenedor-herramientas");
-                    if (seccion) {
-                        const yOffset = -20;
-                        const y = seccion.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                        window.scrollTo({ top: y, behavior: 'smooth' });
-                    }
-                });
-            }, 300);
+            
         }}
     >
         ✨ Generar Flashcards
     </button>
         
     <button 
-        type="button"
-        className="btn-ia btn-cuestionario"
-        onClick={async (e) => {
-            e.preventDefault();
-            await enviarDato(e);
-            handleClose();
+                      type="button"
+                      className="btn-ia btn-cuestionario"
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        await enviarDato(e);
+                        handleClose();
 
-          
-            setTimeout(() => {
-                requestAnimationFrame(() => {
-                    const seccion = document.getElementById("contenedor-herramientas");
-                    if (seccion) {
-                        const yOffset = -20;
-                        const y = seccion.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                        window.scrollTo({ top: y, behavior: 'smooth' });
-                    }
-                });
-            }, 300);
-        }}
+                      }}
+            
     >
         📝 Generar Cuestionario
     </button>

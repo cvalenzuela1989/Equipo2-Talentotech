@@ -8,31 +8,26 @@ import { MdStopCircle } from "react-icons/md";
 import './styleMenu.css';
 import FlashCard from '../FlashCard/FlashCard.jsx';
 import Cuestionario from '../Cuestionario/Cuestionario.jsx'
+
 export default function VisorAccesibleLTI() {
-  const { pdfData, cargando, error,enviarDato } = useContext(PdfContext);
-  const { colorFondo, colorTexto } = useContext(ColorContext);
+  const { pdfData, cargando, error, enviarDato, menuAbierto, setMenuAbierto } = useContext(PdfContext);
+  const { colorFondo, colorTexto,setColorFondo } = useContext(ColorContext);
   const [palabraBuscada, setPalabraBuscada] = useState('');
-
-
 
   const [colorFondoPDF2, setColorFondoPDF2] = useState('#ffffff');
   const [colorTextoPDF2, setColorTextoPDF2] = useState('#1a1a1a');
   const [tamanioLetra, setTamanioLetra] = useState(16);
   const [textoGlobalSeleccionado, setTextoGlobalSeleccionado] = useState('');
-  const [menuAbierto, setMenuAbierto] = useState(true);
   const [menuPosicion, setMenuPosicion] = useState(null);
   const [reproduciendoSeleccion, setReproduciendoSeleccion] = useState(false);
  
-  const [ tipoLetra, setTipoLetra ] = useState('Nunito');
-  
+  const [tipoLetra, setTipoLetra] = useState('Nunito');
+ 
   const [showExplicacionModal, setShowExplicacionModal] = useState(false);
   const [explicacionTexto, setExplicacionTexto] = useState('');
   const [cargandoExplicacion, setCargandoExplicacion] = useState(false);
-  
-  
   const [tipoModal, setTipoModal] = useState('explicacion');
 
-  
   // Función para solicitar explicación de un fragmento
   const solicitarExplicacion = async (texto) => {
     setCargandoExplicacion(true);
@@ -40,9 +35,7 @@ export default function VisorAccesibleLTI() {
     try {
       const response = await fetch('http://localhost:8080/api/v1/explanation', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'text/plain',
-        },
+        headers: { 'Content-Type': 'text/plain' },
         body: texto,
       });
       const data = await response.text();
@@ -64,13 +57,10 @@ export default function VisorAccesibleLTI() {
     try {
       const response = await fetch('http://localhost:8080/api/v1/summarize', { 
         method: 'POST',
-        headers: {
-          'Content-Type': 'text/plain', 
-        },
+        headers: { 'Content-Type': 'text/plain' },
         body: textoCompleto,
       });
       const data = await response.text();
-     
       setExplicacionTexto(data || "No se recibió resumen."); 
       setShowExplicacionModal(true);
     } catch (error) {
@@ -118,22 +108,24 @@ export default function VisorAccesibleLTI() {
   const aplicarTematexto = (texto) => {
     setColorTextoPDF2(texto);
   };
+
   const cambiarLetra = (letra) => {
     setTipoLetra(letra);
   };
-  //limpiar herramienta
- function borrarFiltros(){
+
+  function borrarFiltros(){
     setColorFondoPDF2('#ffffff');
     setColorTextoPDF2('#1a1a1a');
     setTipoLetra('sans-serif');
     setTamanioLetra(16);
     setPalabraBuscada(''); 
- }
- 
+    setColorFondo("#DAE9F0");
+  }
 
   const manejarBusqueda = (datosFormulario) => {
-  setPalabraBuscada(datosFormulario); 
-};
+    setPalabraBuscada(datosFormulario); 
+  };
+
   if (cargando) return <div className="pdf-status">Extrayendo y optimizando el texto para accesibilidad...</div>;
   if (error) return <div className="pdf-status" style={{ color: '#ef4444', padding: '20px' }}><h3>⚠️ Error</h3><p>{error}</p></div>;
 
@@ -143,56 +135,30 @@ export default function VisorAccesibleLTI() {
       color: colorTexto, 
       minHeight: '100vh', 
       transition: 'background-color 0.3s ease',
-      fontFamily:tipoLetra
+      fontFamily: tipoLetra
     }} onClick={() => setMenuPosicion(null)}>
       {pdfData ? (
         <>
-          <div className="info-lti-header text-amber-50" style={{ marginBottom: '15px', color:"#0e0707" }}>
-            
-          </div>
+          <div className="info-lti-header text-amber-50" style={{ marginBottom: '15px', color:"#0e0707" }}></div>
           
-          <div className='botonera'>
-            <button className="boton-accesible" onClick={() => setMenuAbierto(true)}>⚙️ Abrir Menú</button>
-            <button className="boton-accesible2" onClick={() => setMenuAbierto(false)}>⚙️ Cerrar Menú</button>
-         
-          </div>
           
-         {reproduciendoSeleccion && (
-    <button
-        className="btn-detener-lectura"
-        onClick={detenerTexto}
-    >
-        <MdStopCircle size={22} />
-        <span>Detener lectura</span>
-    </button>
-)}
-
-        
+          {reproduciendoSeleccion && (
+            <button className="btn-detener-lectura" onClick={detenerTexto}>
+              <MdStopCircle size={22} />
+              <span>Detener lectura</span>
+            </button>
+          )}
+     
           {menuPosicion && (
-            <div 
-                className="menu-flotante" 
-                style={{ 
-                    top: menuPosicion.y, 
-                    left: menuPosicion.x 
-                }}
-            >
-                <button 
-                    className="btn-menu-escuchar"
-                onClick={() => leerTextoSeleccionado(textoGlobalSeleccionado)}
-                
-              >
-                
-                    <span role="img" aria-label="megáfono">📢</span> Escuchar
-                </button>
+            <div className="menu-flotante" style={{ top: menuPosicion.y, left: menuPosicion.x }}>
+              <button className="btn-menu-escuchar" onClick={() => leerTextoSeleccionado(textoGlobalSeleccionado)}>
+                <span role="img" aria-label="megáfono">📢</span> Escuchar
+              </button>
 
-                <button 
-                    className="btn-menu-explicar"
-                    onClick={() => solicitarExplicacion(textoGlobalSeleccionado)} 
-                    disabled={cargandoExplicacion}
-                >
-                    <span role="img" aria-label="varita mágica">✨</span> 
-                    {cargandoExplicacion && tipoModal === 'explicacion' ? "Procesando..." : "Explícamelo"}
-                </button>
+              <button className="btn-menu-explicar" onClick={() => solicitarExplicacion(textoGlobalSeleccionado)} disabled={cargandoExplicacion}>
+                <span role="img" aria-label="varita mágica">✨</span> 
+                {cargandoExplicacion && tipoModal === 'explicacion' ? "Procesando..." : "Explícamelo"}
+              </button>
             </div>
           )}
 
@@ -206,45 +172,42 @@ export default function VisorAccesibleLTI() {
              setTamanioLetra={setTamanioLetra}
              alEscuchar={leerTexto}
              alDetener={detenerTexto}
-            solicitarResumen={solicitarResumen}
-            cambiarLetra={cambiarLetra}
-            borrarFiltros={borrarFiltros}
-            manejarBusqueda={manejarBusqueda}
-            enviarDato={enviarDato}
-           
+             solicitarResumen={solicitarResumen}
+             cambiarLetra={cambiarLetra}
+             borrarFiltros={borrarFiltros}
+             manejarBusqueda={manejarBusqueda}
+             enviarDato={enviarDato}
           />
 
-   
-<HojaTexto
-    colorFondoPDF={colorFondoPDF2}
-    colorTextoPDF={colorTextoPDF2}
-    lineasTexto={pdfData.split('\n')}
-    colorFondo={colorFondo}
-    colorTexto={colorTexto}
-    tamanioLetra={tamanioLetra}
-    setTextoGlobalSeleccionado={setTextoGlobalSeleccionado}
-    setMenuPosicion={setMenuPosicion}
-    palabraBuscada={palabraBuscada} 
-/>
-<div id="contenedor-herramientas" style={{ marginTop: '40px' }}>
-    <FlashCard />
-    <Cuestionario />
-</div>
+          <HojaTexto
+            colorFondoPDF={colorFondoPDF2}
+            colorTextoPDF={colorTextoPDF2}
+            lineasTexto={pdfData.split('\n')}
+            colorFondo={colorFondo}
+            colorTexto={colorTexto}
+            tamanioLetra={tamanioLetra}
+            setTextoGlobalSeleccionado={setTextoGlobalSeleccionado}
+            setMenuPosicion={setMenuPosicion}
+            palabraBuscada={palabraBuscada} 
+          />
+          <div id="contenedor-herramientas" style={{ marginTop: '40px' }}>
+              <FlashCard />
+              <Cuestionario />
+          </div>
        
           {showExplicacionModal && (
-    <div className="modal-overlay" onClick={() => setShowExplicacionModal(false)}>
-        <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <h3>{tipoModal === 'resumen' ? 'Resumen del documento' : 'Explicación del fragmento'}</h3>
-            <p style={{ whiteSpace: 'pre-wrap' }}>{explicacionTexto}</p>
-            <button onClick={() => setShowExplicacionModal(false)}>Cerrar</button>
-        </div>
-    </div>
-)}
+            <div className="modal-overlay" onClick={() => setShowExplicacionModal(false)}>
+                <div className="modal-content" onClick={e => e.stopPropagation()}>
+                    <h3>{tipoModal === 'resumen' ? 'Resumen del documento' : 'Explicación del fragmento'}</h3>
+                    <p style={{ whiteSpace: 'pre-wrap' }}>{explicacionTexto}</p>
+                    <button onClick={() => setShowExplicacionModal(false)}>Cerrar</button>
+                </div>
+            </div>
+          )}
         </>
       ) : (
         <div className="pdf-status">No hay documento para mostrar.</div>
       )}
     </div>
   );
-  
 }

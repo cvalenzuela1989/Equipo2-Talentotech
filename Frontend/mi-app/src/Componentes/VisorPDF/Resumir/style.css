@@ -133,3 +133,80 @@
     font-size: 24px;
 
 }
+
+
+@media (max-width: 768px) {
+    .resumen-card {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    .resumen-header {
+        gap: 12px;
+        margin-bottom: 14px;
+    }
+
+    .resumen-icono {
+        font-size: 34px;
+        padding: 8px;
+        border-radius: 12px;
+    }
+
+    .resumen-header h5 {
+        font-size: 1rem;
+    }
+
+    .resumen-header p {
+        font-size: 0.84rem;
+    }
+
+    .btn-resumen {
+        padding: 12px;
+        font-size: 0.95rem;
+        border-radius: 12px;
+        gap: 8px;
+    }
+
+    .btn-resumen svg {
+        font-size: 20px;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .resumen-card {
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    .resumen-header {
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .resumen-icono {
+        font-size: 26px;
+        padding: 6px;
+        border-radius: 10px;
+    }
+
+    .resumen-header h5 {
+        font-size: 0.9rem;
+    }
+
+    .resumen-header p {
+        font-size: 0.76rem;
+        margin-top: 2px;
+    }
+
+    .btn-resumen {
+        padding: 10px;
+        font-size: 0.85rem;
+        border-radius: 10px;
+        gap: 6px;
+    }
+
+    .btn-resumen svg {
+        font-size: 18px;
+    }
+}

@@ -1,7 +1,3 @@
-
-.tamaño-container{
-    background-color: #cc3636;
-}
 .grupo-control {
     background: #f1eeee;
     border: 2px solid #e5e7eb;
@@ -9,13 +5,10 @@
     padding: 24px;
     margin-bottom: 20px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, .08);
-
     display: flex;
     flex-direction: column;
     gap: 22px;
 }
-
-
 
 .grupo-control h5 {
     margin: 0;
@@ -24,17 +17,15 @@
     color: #1f2937;
     text-transform: uppercase;
     letter-spacing: .8px;
+    display: flex;
+    align-items: center;
 }
-
-
 
 .tamaño-container {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 20px;
 }
-
-
 
 .botones-tamano {
     display: flex;
@@ -46,127 +37,231 @@
 .boton {
     width: 52px;
     height: 52px;
-
     border: none;
     border-radius: 14px;
-
     background: #010613;
-
     color: white;
-
     font-size: 1.15rem;
-
     font-weight: bold;
-
     cursor: pointer;
-
     transition: all .25s ease;
 }
 
 .boton:hover {
-
     background: #1d4ed8;
-
     transform: translateY(-3px);
-
     box-shadow: 0 8px 20px rgba(37, 99, 235, .35);
-
 }
 
 .boton:active {
-
     transform: scale(.95);
-
 }
-
-
 
 .valor-px {
-
     width: 80px;
-
     text-align: center;
-
     font-size: 1.2rem;
-
     font-weight: 700;
-
     color: #111827;
-
     background: #f3f4f6;
-
     padding: 10px;
-
     border-radius: 12px;
-
 }
 
-
-
 .selector-texto {
-
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
     background: #f9fafb;
-
     border: 1px solid #e5e7eb;
-
     border-radius: 14px;
-
     padding: 16px 18px;
-
 }
 
 .selector-texto label {
-
     margin: 0;
-
     color: #555f6e;
-
     font-weight: 600;
-
     font-size: .92rem;
-
+    display: flex;
+    align-items: center;
 }
 
-
-
 input[type="color"] {
-
-    width: 50px;
-
-    height: 50px;
-
+    width: 44px;
+    height: 44px;
     border: none;
-
     background: none;
-
     cursor: pointer;
-
     transition: .25s;
-
 }
 
 input[type="color"]::-webkit-color-swatch {
-
     border: none;
-
     border-radius: 50%;
-
 }
 
 input[type="color"]::-webkit-color-swatch-wrapper {
-
     padding: 0;
-
 }
 
 input[type="color"]:hover {
-
     transform: scale(1.1);
+}
 
+/* ==========================
+        TABLETS
+========================== */
+
+@media (max-width: 992px) {
+
+    .grupo-control {
+        padding: 20px;
+        gap: 18px;
+    }
+
+    .grupo-control h5 {
+        font-size: .95rem;
+    }
+
+    .botones-tamano {
+        gap: 16px;
+    }
+
+    .boton {
+        width: 46px;
+        height: 46px;
+        font-size: 1rem;
+    }
+
+    .valor-px {
+        width: 70px;
+        font-size: 1.05rem;
+        padding: 8px;
+    }
+
+    .selector-texto {
+        padding: 14px 16px;
+    }
+
+    .selector-texto label {
+        font-size: .9rem;
+    }
+
+    input[type="color"] {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+
+/* ==========================
+        CELULARES
+========================== */
+
+@media (max-width: 768px) {
+
+    .grupo-control {
+        padding: 16px;
+        gap: 16px;
+        border-radius: 14px;
+    }
+
+    .grupo-control h5 {
+        font-size: .9rem;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .botones-tamano {
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .boton {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        font-size: .95rem;
+    }
+
+    .valor-px {
+        width: 60px;
+        font-size: 1rem;
+        padding: 8px;
+    }
+
+    .selector-texto {
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        text-align: center;
+        padding: 15px;
+        color:#010613;
+    }
+
+    .selector-texto label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: .88rem;
+        color:#010613;
+    }
+
+    input[type="color"] {
+        width: 42px;
+        height: 42px;
+    }
+}
+
+
+/* ==========================
+    CELULARES PEQUEÑOS
+========================== */
+
+@media (max-width: 480px) {
+ .tamaño-container{
+    background-color: #e5e7eb;
+ }
+    .grupo-control {
+        padding: 14px;
+        gap: 14px;
+        background-color: #e5e7eb;
+    }
+
+    .grupo-control h5 {
+        font-size: .82rem;
+    }
+
+    .botones-tamano {
+        gap: 10px;
+    }
+
+    .boton {
+        width: 38px;
+        height: 38px;
+        font-size: .85rem;
+    }
+
+    .valor-px {
+        width: 55px;
+        font-size: .9rem;
+        padding: 6px;
+    }
+
+    .selector-texto {
+        padding: 12px;
+        border-radius: 12px;
+        background-color: #e5e7eb;
+        color:#010613;
+    }
+
+    .selector-texto label {
+        font-size: .8rem;
+    }
+
+    input[type="color"] {
+        width: 38px;
+        height: 38px;
+    }
 }
