@@ -89,17 +89,6 @@ npm run dev
 
 ### Backend
 
-
-**Variables de entorno usadas por el backend:**
-
-| Variable | Para qué sirve | ¿Obligatoria? |
-|---|---|---|
-| `GOOGLE_AI_API_KEY` | Clave de la API de Gemini (funciones de IA: resumen, explicación, quiz, flashcards) | Sí |
-| `FIREBASE_CONFIG_JSON` | Contenido completo del `.json` de credenciales de Firebase, en texto plano. Pensada para **entornos de servidor/deploy** (ej. Render, Azure), donde no se sube el archivo físico | Sí, en producción (alternativa a `firebase.config.file` en local) |
-| `FRONT_URL` | URL donde corre el frontend (usada por el backend para CORS/redirects). Por defecto es `http://localhost:5173` si no se define | No (tiene valor por defecto en local) |
-
-> En **local**, `GOOGLE_AI_API_KEY` y `FIREBASE_CONFIG_JSON` se pueden setear como variables de entorno del sistema, **o** cargarse directamente en `application.properties` como se explica paso a paso más abajo (clave de Gemini pegada en la línea del archivo, y credencial de Firebase como archivo `.json` en `resources/` en vez de variable de entorno).
-
 1. Cloná el repo y entrá a la carpeta del backend:
 ```bash
    cd Backend/lti-tool-accesibility
@@ -131,7 +120,20 @@ npm run dev
      > Si tu archivo se llamó distinto, actualizá esta línea con el nombre real.
      > En despliegues de servidor (Render, Azure, etc.) se usa en cambio la variable de entorno `FIREBASE_CONFIG_JSON`, pegando ahí el contenido completo del `.json` como texto.
 
-4. **Levantá el servidor:**
+4. **Configurá la conexión con Moodle:**
+   ```properties
+   # issuer: donde está corriendo el LMS
+   moodle.issuer=https://tu-moodle.com
+
+   # auth-url: URL del LMS que autentica al usuario
+   moodle.auth-url=https://tu-moodle.com/mod/lti/auth.php
+
+   moodle.ws.base-url=https://tu-moodle.com/webservice/rest/server.php
+   moodle.ws.token=TU_TOKEN_DE_WEB_SERVICES
+   ```
+> El token de `moodle.ws.token` se obtiene desde Moodle en **Server** → **Overview** → **Create a token for a user**, luego de asegurarte que Enable web services esté en `Yes`.
+
+5. **Levantá el servidor:**
 ```bash
    ./mvnw spring-boot:run
 ```
@@ -191,8 +193,18 @@ Una vez que tenés el Moodle levantado (local o en `innovalab.moodlecloud.com`),
    moodle.ws.base-url=https://tu-moodle.com/webservice/rest/server.php
    moodle.ws.token=TU_TOKEN_DE_WEB_SERVICES
 ```
+### Variables de entorno para despliegue (producción)
 
+En entornos de servidor (ej. Render, Azure) la configuración no se carga en `application.properties`, sino como variables de entorno del servicio:
 
+| Variable | Para qué sirve |
+|---|---|
+| `GOOGLE_AI_API_KEY` | Clave de la API de Gemini (funciones de IA: resumen, explicación, quiz, flashcards) |
+| `FIREBASE_CONFIG_JSON` | Contenido completo del `.json` de credenciales de Firebase, pegado como texto plano |
+| `FRONT_URL` | URL donde corre el frontend desplegado (usada por el backend para CORS/redirects) |
+| `PORT` | Puerto en el que escucha el backend; lo suele definir la plataforma de hosting automáticamente |
+
+> Estas variables se cargan desde el panel de **Environment** de la plataforma de despliegue.
 
 ---
 
