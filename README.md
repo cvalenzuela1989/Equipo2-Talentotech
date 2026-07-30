@@ -77,7 +77,44 @@ Equipo2-Talentotech/
 ├── UX-UI/                       # Diseños, prototipos y assets de interfaz
 └── .github/workflows/           # Pipelines de CI/CD (Azure deploy, CodeQL)
 ```
+##  Arquitectura
 
+NEXA TOOL conecta tres piezas: **Moodle** (la plataforma LTI), el **Backend** (Spring Boot) y el **Frontend** (React). El flujo de comunicación es el siguiente:
+
+### 1. Lanzamiento desde Moodle (LTI 1.3 / OIDC)
+1. El usuario abre la herramienta externa dentro de un curso de Moodle.
+2. Moodle envía una solicitud de login a `POST /lti/login` en el Backend.
+3. El Backend redirige a Moodle (`moodle.auth-url`) para completar la autenticación OIDC (OpenID Connect), el protocolo que le permite al Backend confiar en la identidad del usuario sin pedirle usuario/contraseña propios.
+4. Moodle responde con un `id_token` firmado (JWT) a `POST /lti/launch`.
+5. El Backend decodifica el JWT, resuelve los datos del curso/sección/material vía `MoodleContentResolver`, y persiste el lanzamiento (`LtiPersistenceService`).
+6. El Backend redirige al navegador hacia el **Frontend**, pasando los datos del contexto (usuario, curso, sección, URL del PDF) como query params.
+
+### 2. Interacción en el Frontend
+7. El Frontend solicita el PDF al Backend (`GET /api/v1/view`), que a su vez lo descarga desde Moodle y lo devuelve para visualizarlo en el visor embebido.
+8. El usuario puede pedir funciones de IA (resumen, explicación simple, generación de quiz), que el Frontend solicita al Backend vía `/api/v1/summarize`, `/api/v1/explanation` y `/api/v1/quiz`.
+9. Las preferencias de accesibilidad configurables (tamaño de letra, tipografía, paleta de colores, modo de lectura concentrada) se aplican al instante en el navegador y se envían de forma asíncrona a `POST /api/v1/events/accessibility`, que el Backend guarda en Firebase.
+10. La lectura por voz es una acción puntual bajo demanda: el usuario selecciona un fragmento de texto y dispara la síntesis de voz (`SpeechSynthesis`) directamente en el navegador. No pasa por el Backend ni se persiste ningún estado.
+
+### 3. Servicios externos
+- **Firebase**: almacena las preferencias de accesibilidad por usuario.
+- **Google Gemini (Spring AI)**: motor de IA detrás de resumen, explicación y generación de quiz.
+- **Moodle Web Services**: usado por el Backend para resolver contenido del curso durante el `launch`.
+
+```
+Moodle   ──(login/launch OIDC)────────▶  Backend  ──(redirect + query params)──▶  Frontend
+Frontend ──(GET /api/v1/view)──▶ Backend ──▶ Moodle ──▶ Backend ──▶ Frontend (PDF inline)
+Frontend ──(POST /api/v1/summarize)───▶  Backend  ──▶ Gemini   (resumen)
+Frontend ──(POST /api/v1/explanation)─▶  Backend  ──▶ Gemini   (explicación simple)
+Frontend ──(POST /api/v1/quiz)────────▶  Backend  ──▶ Gemini   (generación de quiz)
+Frontend ──(POST /api/v1/events/accessibility)──▶ Backend ──▶ Firebase
+(preferencias configurables y persistentes: tamaño de letra, tipografía, paleta—>
+ se aplican al instante y se guardan de forma asíncrona)
+
+Frontend ──(no llega al Backend)
+Acción: texto a voz (SpeechSynthesis del navegador — se dispara por selección de texto,
+no se persiste ningún estado)
+```
+--- 
 
 ##  Puesta en marcha
 ### Frontend
@@ -117,8 +154,9 @@ npm run dev
 ```properties
      firebase.config.file=lti-external-tool-firebase-adminsdk-fbsvc-2a5e705315.json
 ```
-     > Si tu archivo se llamó distinto, actualizá esta línea con el nombre real.
-     > En despliegues de servidor (Render, Azure, etc.) se usa en cambio la variable de entorno `FIREBASE_CONFIG_JSON`, pegando ahí el contenido completo del `.json` como texto.
+     > Si tu archivo se llama distinto, actualizá esta línea con el nombre real.
+     > En despliegues de servidor (Render, Azure, etc.) se usa ,en cambio,
+     la variable de entorno `FIREBASE_CONFIG_JSON`, pegando ahí el contenido completo del `.json` como texto.
 
 4. **Configurá la conexión con Moodle:**
    ```properties
@@ -205,6 +243,21 @@ En entornos de servidor (ej. Render, Azure) la configuración no se carga en `ap
 | `PORT` | Puerto en el que escucha el backend; lo suele definir la plataforma de hosting automáticamente |
 
 > Estas variables se cargan desde el panel de **Environment** de la plataforma de despliegue.
+
+---
+### Endpoints de la API
+
+El backend expone los siguientes endpoints principales. La documentación interactiva (Swagger UI), con el detalle completo de parámetros y respuestas, está disponible en: [https://lti-accessibility-tool.onrender.com/swagger-ui/index.html](https://lti-accessibility-tool.onrender.com/swagger-ui/index.html)
+
+| Método | Endpoint | Qué hace |
+|---|---|---|
+| `POST` | `/lti/login` | Primer paso del flujo OIDC de LTI 1.3: recibe los parámetros de Moodle y redirige al `auth-url` del LMS para autenticar al usuario |
+| `POST` | `/lti/launch` | Recibe el `id_token` firmado por Moodle, decodifica los datos del lanzamiento (usuario, curso, PDF, etc.), los persiste y redirige al Frontend con esos datos como query params |
+| `GET` | `/api/v1/view` | Trae el PDF desde la URL de Moodle (`fileUrl`) y lo devuelve para mostrarlo embebido en el visor del Frontend (respuesta `inline`, sin opción de descarga para el usuario) |
+| `POST` | `/api/v1/summarize` | Recibe un texto en el body y devuelve un resumen generado por IA con las ideas clave |
+| `POST` | `/api/v1/explanation` | Recibe un texto en el body y devuelve una explicación simplificada generada por IA |
+| `POST` | `/api/v1/quiz` | Recibe un texto en el body y genera automáticamente un cuestionario (quiz) de autoevaluación con IA |
+| `POST` | `/api/v1/events/accessibility` | Recibe las preferencias de accesibilidad configuradas por el usuario en el Frontend (tipografía, contraste, etc.) y responde de inmediato, delegando el guardado en Firebase a un proceso asíncrono |
 
 ---
 
