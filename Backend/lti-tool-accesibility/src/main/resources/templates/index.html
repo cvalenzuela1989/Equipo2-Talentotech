@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXA - Herramienta de Accesibilidad</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 90%;
+        }
+        .logo-img {
+            max-width: 180px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #6c757d;
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+        .btn-action {
+            background-color: #0d6efd;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background 0.2s;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 16px;
+            display: inline-block;
+        }
+        .btn-action:hover {
+            background-color: #0b5ed7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Logo oficial de NEXA -->
+        <img src="/Nexa-Logo.png" alt="Logo Nexa" class="logo-img">
+        <p>Bienvenido a la herramienta de accesibilidad integrada.</p>
+        <a href="/herramientas" class="btn-action">
+            <i class="fa-solid fa-gear"></i> Abrir Menú de Herramientas
+        </a>
+    </div>
+</body>
+</html>

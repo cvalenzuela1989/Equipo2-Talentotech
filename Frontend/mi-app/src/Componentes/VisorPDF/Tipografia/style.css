@@ -1,165 +1,191 @@
-
-
 .tipografia-card {
-
     background: #ffffff;
-
     border: 1px solid #e5e7eb;
-
     border-radius: 18px;
-
     padding: 22px;
-
     box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
-
 }
 
-
-
 .tipografia-header {
-
     display: flex;
-
     align-items: center;
-
     gap: 10px;
-
     margin-bottom: 10px;
-
 }
 
 .titulo-icono {
-
     font-size: 26px;
-
-    color: #2563eb;
-
+    color: #4b5563;
 }
 
 .tipografia-header h5 {
-
     margin: 0;
-
     font-size: 1rem;
-
     font-weight: 700;
-
     color: #1f2937;
-
 }
-
-
 
 .tipografia-descripcion {
-
     margin-bottom: 20px;
-
     color: #6b7280;
-
     font-size: .88rem;
-
+    line-height: 1.5;
 }
-
-
 
 .tipografia-lista {
-
     display: flex;
-
     flex-direction: column;
-
     gap: 14px;
-
 }
 
-
-
 .btn-tipografia {
-
     width: 100%;
-
     background: #f8fafc;
-
     border: 1px solid #e5e7eb;
-
     border-radius: 14px;
-
     padding: 15px 18px;
-
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
     cursor: pointer;
-
     transition: .25s;
-
 }
 
 .btn-tipografia:hover {
-
-    background: #eff6ff;
-
-    border-color: #2563eb;
-
+    background: #f3f4f6;
+    border-color: #9ca3af;
     transform: translateY(-2px);
-
-    box-shadow: 0 8px 18px rgba(37, 99, 235, .15);
-
+    box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
 }
 
-
-
 .tipografia-info {
-
     display: flex;
-
     align-items: center;
-
     gap: 15px;
-
 }
 
 .tipografia-info svg {
-
     font-size: 24px;
-
-    color: #2563eb;
-
+    color: #4b5563;
 }
 
 .tipografia-info strong {
-
     display: block;
-
     color: #111827;
-
     font-size: .95rem;
-
 }
 
 .tipografia-info small {
-
     color: #6b7280;
-
     font-size: .75rem;
-
 }
 
 
 
-.check-icono {
+@media (max-width: 768px) {
+    .tipografia-card {
+        padding: 16px;
+        border-radius: 16px;
+    }
 
-    color: #9ca3af;
+    .tipografia-header {
+        margin-bottom: 8px;
+        gap: 8px;
+    }
 
-    font-size: 22px;
+    .titulo-icono {
+        font-size: 22px;
+    }
 
+    .tipografia-descripcion {
+        font-size: 0.84rem;
+        margin-bottom: 12px;
+        line-height: 1.4;
+    }
+
+    .tipografia-lista {
+        gap: 10px;
+    }
+
+    .btn-tipografia {
+        padding: 12px 14px;
+        border-radius: 12px;
+    }
+
+    .tipografia-info svg {
+        display: none;
+    }
+
+    .tipografia-info {
+        gap: 0;
+    }
+
+    .tipografia-info strong {
+        font-size: .9rem;
+    }
+
+    .tipografia-info small {
+        font-size: .7rem;
+    }
 }
 
-.btn-tipografia:hover .check-icono {
+ @media (max-width: 768px) {
+    .tipografia-card {
+        padding: 14px;
+        border-radius: 14px;
+    }
 
-    color: #2563eb;
+    .tipografia-header {
+        margin-bottom: 8px;
+        gap: 8px;
+    }
 
-}
+    .titulo-icono {
+        font-size: 22px;
+    }
+
+    .tipografia-descripcion {
+        font-size: 0.8rem;
+        margin-bottom: 12px;
+        line-height: 1.4;
+    }
+
+    .tipografia-lista {
+        gap: 10px;
+    }
+
+    .btn-tipografia {
+        padding: 12px 14px;
+        border-radius: 12px;
+        flex-direction: column;
+     
+        align-items: flex-start;
+       
+        text-align: left;
+        gap: 4px;
+    }
+
+    .tipografia-info {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+    }
+
+    .tipografia-info svg {
+        display: none;
+        /* Ocultamos iconos internos si molestan en mobile */
+    }
+
+    .tipografia-info strong {
+        font-size: 0.92rem;
+        font-weight: 600;
+    }
+
+    .tipografia-info small {
+        font-size: 0.72rem;
+        color: #6b7280;
+        white-space: normal;
+        /* Permite que el texto baje de línea ordenadamente */
+    }
+ }

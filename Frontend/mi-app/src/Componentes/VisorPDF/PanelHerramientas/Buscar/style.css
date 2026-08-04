@@ -1,161 +1,159 @@
-
-
 .buscar-container {
-
     background: #f8fafc;
-
     border-radius: 18px;
-
     padding: 24px;
-
     box-shadow: 0 8px 20px rgba(0, 0, 0, .08);
-
 }
 
-
 .buscar-header {
-
     display: flex;
-
     align-items: center;
-
     gap: 10px;
-
     margin-bottom: 10px;
-
 }
 
 .buscar-icono {
-
     font-size: 30px;
-
     color: #2563eb;
-
 }
 
 .buscar-header h5 {
-
     margin: 0;
-
     font-size: 1.15rem;
-
     font-weight: 700;
-
     color: #1f2937;
-
 }
 
 .buscar-descripcion {
-
     color: #6b7280;
-
     font-size: .92rem;
-
     margin-bottom: 18px;
-
 }
-
-
 
 .buscar-form {
-
     display: flex;
-
     align-items: center;
-
     gap: 12px;
-
 }
 
-
-
 .buscar-input {
-
     flex: 1;
-
     padding: 12px 16px;
-
     border: 2px solid #d1d5db;
-
     border-radius: 12px;
-
     font-size: .95rem;
-
     outline: none;
-
     transition: .25s;
-
     background: white;
-
 }
 
 .buscar-input:focus {
-
     border-color: #2563eb;
-
     box-shadow: 0 0 0 4px rgba(37, 99, 235, .15);
-
 }
 
-
 .buscar-btn {
-
     display: flex;
-
     align-items: center;
-
     gap: 8px;
-
     padding: 12px 18px;
-
     border: none;
-
     border-radius: 12px;
-
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
-
     color: white;
-
     font-weight: 600;
-
     cursor: pointer;
-
     transition: .25s;
-
     box-shadow: 0 6px 16px rgba(37, 99, 235, .25);
-
 }
 
 .buscar-btn:hover {
-
     transform: translateY(-2px);
-
     box-shadow: 0 10px 20px rgba(37, 99, 235, .35);
-
 }
 
 .buscar-btn:active {
-
     transform: scale(.97);
-
 }
 
+/* --- Media Queries --- */
 
-
-@media(max-width:650px) {
-
+@media (max-width: 650px) {
     .buscar-form {
-
         flex-direction: column;
-
+        justify-content: center;
+        align-items: center;
+        display: flex;
     }
 
     .buscar-btn {
-
         width: 100%;
-
         justify-content: center;
+    }
+}
 
+@media (max-width: 480px) {
+    .buscar-container {
+        padding: 16px;
+        border-radius: 14px;
     }
 
+    .buscar-header {
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .buscar-icono {
+        font-size: 24px;
+    }
+
+    .buscar-header h5 {
+        font-size: 1.05rem;
+    }
+
+    .buscar-descripcion {
+        font-size: 0.85rem;
+        margin-bottom: 14px;
+    }
+
+    .buscar-input {
+        padding: 10px 14px;
+        font-size: 0.9rem;
+        border-radius: 10px;
+    }
+
+    .buscar-btn {
+        padding: 10px 14px;
+        font-size: 0.9rem;
+        border-radius: 10px;
+    }
+}
+
+@media (max-width: 360px) {
+    .buscar-container {
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    .buscar-header h5 {
+        font-size: 0.95rem;
+    }
+
+    .buscar-descripcion {
+        font-size: 0.8rem;
+        margin-bottom: 12px;
+        display:flex;
+        flex-direction: column;
+    }
+
+    .buscar-input {
+        margin:14px;
+        font-size: 0.85rem;
+        width: 150px;
+    }
+
+    .buscar-btn {
+        padding: 9px 12px;
+        font-size: 0.85rem;
+    }
 }

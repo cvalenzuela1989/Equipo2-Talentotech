@@ -92,12 +92,7 @@ color:white;
   flex-direction: column;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
+
 
 h1 {
   font-size: 56px;

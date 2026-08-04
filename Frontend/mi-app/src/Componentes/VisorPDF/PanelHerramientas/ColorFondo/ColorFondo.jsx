@@ -1,7 +1,7 @@
 import { MdLightMode, MdDarkMode, MdBrush } from "react-icons/md";
 import { FaScroll } from "react-icons/fa";
 import "./style.css";
-import PaletaColor from "../../../Paleta/PaletaColor";
+
 
 const ColorFondo = ({
   aplicarTemaPDF,
@@ -47,7 +47,7 @@ const ColorFondo = ({
       <div className="color-picker-container">
 
         <label>
-          Color personalizado
+          Color del PDF
         </label>
 
         <input
@@ -58,7 +58,7 @@ const ColorFondo = ({
 
       </div>
 
-      <PaletaColor />
+   
 
     </div>
   );

@@ -1,0 +1,104 @@
+{
+  "quiz": [
+    {
+      "pregunta": "¿Quién inventó la pascalina en 1642?",
+      "opciones": [
+        "John Napier",
+        "Blaise Pascal",
+        "Leibnitz",
+        "Charles Babbage"
+      ],
+      "respuestaCorrecta": "Blaise Pascal"
+    },
+    {
+      "pregunta": "¿A quién se le considera la primera programadora debido a sus sugerencias sobre el motor de Babbage?",
+      "opciones": [
+        "Ada Augusta Lovelace",
+        "Grace Hopper",
+        "Clifford Berry",
+        "Herman Hollerith"
+      ],
+      "respuestaCorrecta": "Ada Augusta Lovelace"
+    },
+    {
+      "pregunta": "¿Qué empresa se formó en 1924 tras la fusión de la compañía de Herman Hollerith con otras dos?",
+      "opciones": [
+        "Intel",
+        "Apple",
+        "IBM",
+        "Microsoft"
+      ],
+      "respuestaCorrecta": "IBM"
+    },
+    {
+      "pregunta": "¿Qué nombre recibió el primer computador electrónico digital desarrollado por Mauchly y Eckert?",
+      "opciones": [
+        "UNIVAC I",
+        "Mark 1",
+        "ENIAC",
+        "EDVAC"
+      ],
+      "respuestaCorrecta": "ENIAC"
+    },
+    {
+      "pregunta": "¿Qué componente permitió el salto de la primera a la segunda generación de computadoras?",
+      "opciones": [
+        "Tubos de vacío",
+        "Circuitos integrados",
+        "Transistores",
+        "Microprocesadores"
+      ],
+      "respuestaCorrecta": "Transistores"
+    },
+    {
+      "pregunta": "¿En qué año se desarrolló el código ASCII, el primer estándar universal para intercambio de información?",
+      "opciones": [
+        "1960",
+        "1963",
+        "1969",
+        "1971"
+      ],
+      "respuestaCorrecta": "1963"
+    },
+    {
+      "pregunta": "¿Quién creó la primera hoja de cálculo denominada VisiCalc en 1979?",
+      "opciones": [
+        "Bill Gates",
+        "Steve Jobs",
+        "Dan Bricklin",
+        "Paul Allen"
+      ],
+      "respuestaCorrecta": "Dan Bricklin"
+    },
+    {
+      "pregunta": "¿Cuál es el significado de la abreviatura 'Internet'?",
+      "opciones": [
+        "International Network",
+        "Interconnected Networks",
+        "Internal Net",
+        "Inter-node Technology"
+      ],
+      "respuestaCorrecta": "Interconnected Networks"
+    },
+    {
+      "pregunta": "¿Quién ideó el hipertexto para crear el World Wide Web (WWW) en 1990?",
+      "opciones": [
+        "Tim Berners-Lee",
+        "Linus Torvalds",
+        "Richard Stallman",
+        "Vinton Cerf"
+      ],
+      "respuestaCorrecta": "Tim Berners-Lee"
+    },
+    {
+      "pregunta": "¿Qué estudiante desarrolló el kernel de Linux a principios de los años noventa?",
+      "opciones": [
+        "Ken Thompson",
+        "Dennis Ritchie",
+        "Linus Torvalds",
+        "Robert Noyce"
+      ],
+      "respuestaCorrecta": "Linus Torvalds"
+    }
+  ]
+}

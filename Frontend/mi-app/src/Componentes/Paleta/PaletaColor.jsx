@@ -12,7 +12,7 @@ function PaletaColor() {
       
       <div className="paleta-container">
         
-        <label > Fondo de la Página</label>
+        <label >Color de fondo de la pagina</label>
         <input 
           type="color" 
           value={colorFondo} 

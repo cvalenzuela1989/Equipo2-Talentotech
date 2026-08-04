@@ -12,7 +12,7 @@ import {
   MdChevronRight,
   MdFontDownload,
 } from "react-icons/md";
-
+import Spinner from "react-bootstrap/Spinner";
 import ColorFondo from "./ColorFondo/ColorFondo";
 import HerramientaVoz from "../HerramientaVoz/HerramientaVoz";
 import TamañoLetra from "./LetraHerramienta/TamañoLetra";
@@ -34,12 +34,20 @@ export default function PanelHerramientas({
   cambiarLetra,
   borrarFiltros,
   manejarBusqueda,
-  enviarDato
+  enviarDato,
+  cargandoResumen: cargandoResumenProp 
 }) {
   const [submenuAbierto, setSubmenuAbierto] = useState(null);
-  
 
-  const { enviarDatoFlashCars } = useContext(PdfContext);
+  const { 
+    enviarDatoFlashCars, 
+    cargandoQuiz, 
+    cargandoFlashcards, 
+    cargandoResumen: cargandoResumenContext,
+	pdfData
+  } = useContext(PdfContext);
+
+  const cargandoResumenFinal = cargandoResumenProp ?? cargandoResumenContext;
 
   return (
     <Offcanvas
@@ -51,7 +59,7 @@ export default function PanelHerramientas({
       className="panel-accesibilidad"
     >
       <Offcanvas.Header closeButton>
-        <Offcanvas.Title>Opciones de Accesibilidad</Offcanvas.Title>
+        <Offcanvas.Title className="titulo">Opciones de Accesibilidad</Offcanvas.Title>
       </Offcanvas.Header>
 
       <Offcanvas.Body className="panel-body">
@@ -66,7 +74,7 @@ export default function PanelHerramientas({
             <div className="menu-info">
               <MdBuild className="menu-icono" />
               <div>
-                <h6>Herramientas IA</h6>
+                <h6 className="tituloia" >Herramientas IA</h6>
                 <small> </small>
               </div>
             </div>
@@ -109,20 +117,9 @@ export default function PanelHerramientas({
             <MdChevronRight className="flecha" />
           </button>
 
-          <button
-            className={`menu-item ${submenuAbierto === "texto" ? "activo" : ""}`}
-            onClick={() => setSubmenuAbierto("texto")}
-          >
-            <div className="menu-info">
-              <MdTextFields className="menu-icono" />
-              <div>
-                <h6>Tamaño del texto</h6>
-                <small>Fuente y tamaño</small>
-              </div>
-            </div>
-            <MdChevronRight className="flecha" />
-          </button>
-         
+       
+          
+           
           <button
             className={`menu-item ${submenuAbierto === "tipografia" ? "activo" : ""}`}
             onClick={() => setSubmenuAbierto("tipografia")}
@@ -130,8 +127,8 @@ export default function PanelHerramientas({
             <div className="menu-info">
               <MdFontDownload className="menu-icono" />
               <div>
-                <h6>Tipografía</h6>
-                <small>Familia tipográfica</small>
+                <h6>Modo Dislexia</h6>
+                <small> Cambia la familia tipográfica</small>
               </div>
             </div>
             <MdChevronRight className="flecha" />
@@ -190,7 +187,7 @@ export default function PanelHerramientas({
                 {submenuAbierto === "herramientas" && "Herramientas"}
                 {submenuAbierto === "voz" && "Lectura"}
                 {submenuAbierto === "apariencia" && "Apariencia"}
-                {submenuAbierto === "texto" && "Tamaño del texto"}
+              
                 {submenuAbierto === "tipografia" && "Tipografía"}
                 {submenuAbierto === "borrarPreferencias" && "Borrar Preferencias"}
                 {submenuAbierto === "buscar" && "Buscar"}
@@ -206,10 +203,18 @@ export default function PanelHerramientas({
               )}
 
               {submenuAbierto === "apariencia" && (
-                <ColorFondo
+               <>
+               <ColorFondo
                   aplicarTemaPDF={aplicarTemaPDF}
                   aplicarTemaFondo={aplicarTemaFondo}
                 />
+                <TamañoLetra
+                  tamaño={tamanioLetra}
+                  setTamaño={setTamanioLetra}
+                  aplicarTemaTexto={aplicarTemaTexto}
+                  aplicarTemaPDF={aplicarTemaPDF}
+                  />
+                  </>
               )}
 
               {submenuAbierto === "tipografia" && (
@@ -220,80 +225,87 @@ export default function PanelHerramientas({
 
               {submenuAbierto === "herramientas" && (
                 <>
-                  <Resumen solicitarResumen={solicitarResumen} />
-                  
+                  {/* Integración del Spinner y estado para el Resumen */}
+                  <div className="ia-card" style={{ marginBottom: '20px' }}>
+                    <h6 className="ia-title">📄 Resumen Automático</h6>
+                    <p className="ia-description">Obtén un resumen rápido del documento actual.</p>
+                    <button
+                      type="button"
+                      className="btn-ia btn-resumen"
+                      disabled={cargandoResumenFinal}
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        // Asumiendo que solicitarResumen recibe el texto completo del PDF o puedes pasarlo según tu lógica existente
+                        await solicitarResumen(pdfData); 
+                        handleClose();
+                      }}
+                    >
+                      {cargandoResumenFinal ? (
+                        <>
+                          <Spinner animation="border" size="sm" className="me-2" />
+                          Generando Resumen...
+                        </>
+                      ) : (
+                        "✨ Generar Resumen"
+                      )}
+                    </button>
+                  </div>
+                   
                   <hr style={{ margin: '20px 0' }} />
-                  
-   <div className="ia-card">
+                   
+                  <div className="ia-card">
+                    <h6 className="ia-title">
+                        🤖 Herramientas Inteligentes
+                    </h6>
 
-    <h6 className="ia-title">
-        🤖 Herramientas Inteligentes
-    </h6>
+                    <p className="ia-description">
+                        Genere material de estudio automáticamente a partir del documento.
+                    </p>
 
-    <p className="ia-description">
-        Genere material de estudio automáticamente a partir del documento.
-    </p>
-
-   <button
-        type="button"
-        className="btn-ia btn-flashcards"
-        onClick={async (e) => {
-            e.preventDefault();
-            await enviarDatoFlashCars();
-            handleClose();
-
-           
-            setTimeout(() => {
-                requestAnimationFrame(() => {
-                    const seccion = document.getElementById("contenedor-herramientas");
-                    if (seccion) {
-                        const yOffset = -20;
-                        const y = seccion.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                        window.scrollTo({ top: y, behavior: 'smooth' });
-                    }
-                });
-            }, 300);
-        }}
-    >
-        ✨ Generar Flashcards
-    </button>
+                    <button
+                      type="button"
+                      className="btn-ia btn-flashcards"
+                      disabled={cargandoFlashcards}
+                      onClick={async (e) => {
+                          e.preventDefault();
+                          await enviarDatoFlashCars();
+                          handleClose();
+                      }}
+                    >
+                        {cargandoFlashcards ? (
+                            <>
+                                <Spinner animation="border" size="sm" className="me-2" />
+                                Generando Flashcards...
+                            </>
+                        ) : (
+                            "✨ Generar Flashcards"
+                        )}
+                    </button>
         
-    <button 
-        type="button"
-        className="btn-ia btn-cuestionario"
-        onClick={async (e) => {
-            e.preventDefault();
-            await enviarDato(e);
-            handleClose();
-
-          
-            setTimeout(() => {
-                requestAnimationFrame(() => {
-                    const seccion = document.getElementById("contenedor-herramientas");
-                    if (seccion) {
-                        const yOffset = -20;
-                        const y = seccion.getBoundingClientRect().top + window.pageYOffset + yOffset;
-                        window.scrollTo({ top: y, behavior: 'smooth' });
-                    }
-                });
-            }, 300);
-        }}
-    >
-        📝 Generar Cuestionario
-    </button>
-
-</div>
+                    <button 
+                      type="button"
+                      className="btn-ia btn-cuestionario"
+                      disabled={cargandoQuiz}
+                      onClick={async (e) => {
+                          e.preventDefault();
+                          await enviarDato(e);
+                          handleClose();
+                      }}
+                    >
+                        {cargandoQuiz ? (
+                            <>
+                                <Spinner animation="border" size="sm" className="me-2" />
+                                Generando Cuestionario...
+                            </>
+                        ) : (
+                            "📝 Generar Cuestionario"
+                        )}
+                    </button>
+                  </div>
                 </>
               )}
 
-              {submenuAbierto === "texto" && (
-                <TamañoLetra
-                  tamaño={tamanioLetra}
-                  setTamaño={setTamanioLetra}
-                  aplicarTemaTexto={aplicarTemaTexto}
-                  aplicarTemaPDF={aplicarTemaPDF}
-                />
-              )}
+              
               
               {submenuAbierto === "buscar" && (
                 <Buscar manejarBusqueda={manejarBusqueda} />

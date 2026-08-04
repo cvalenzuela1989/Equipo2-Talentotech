@@ -130,7 +130,6 @@ public class LtiController {
                 .queryParam("course", dto.getCourseTitle())
                 .queryParam("section", dto.getSectionTitle())
                 .queryParam("pdfUrl", dto.getPdfUrl())
-                // .queryParam("role", dto.getRole()) // Descomentar cuando se agregue el rol al DTO
                 .build()
                 .toUriString();
     }
