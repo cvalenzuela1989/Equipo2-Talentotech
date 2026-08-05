@@ -1,31 +1,33 @@
-
+import React from 'react';
 import RenderizarTextoEstilizado from './RenderizarTextoEstilizado';
 import './style.css';
-function Concentrado({ pdfData,isOpen, onClose,  }) {
-  
 
-
+function Concentrado({ pdfData, isOpen, onClose }) {
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={e => e.stopPropagation()}>
-        <button className="modal-close-btn" onClick={onClose}>✕</button>
-        <div className="modal-body">
+    <div className="zen-overlay" onClick={onClose}>
+      <div className="zen-content" onClick={e => e.stopPropagation()}>
+        <button className="zen-close-btn" onClick={onClose}>✕</button>
+        
+        <div className="zen-header">
+          <h2>Concentrado del Documento</h2>
+        </div>
+
+        <div className="zen-body-scroll">
           {pdfData ? (
-            <div className="concentrado-texto">
-              <h2>Concentrado del Documento</h2>
+            <div className="zen-text-container">
               <RenderizarTextoEstilizado texto={pdfData} />
             </div>
-          
-            
           ) : (
-            <p>No hay datos disponibles para mostrar.</p>
+            <p style={{ textAlign: 'center', color: '#555555' }}>
+              No hay datos disponibles para mostrar.
+            </p>
           )}
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default Concentrado;

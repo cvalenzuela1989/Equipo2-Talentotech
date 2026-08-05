@@ -1,0 +1,34 @@
+[
+  {
+    "frente": "Definición de algoritmo según el texto.",
+    "reverso": "Conjunto ordenado de operaciones propias de un cálculo."
+  },
+  {
+    "frente": "¿Quién es considerada la primera programadora de la historia?",
+    "reverso": "Lady Ada Augusta Lovelace."
+  },
+  {
+    "frente": "¿Qué máquina, desarrollada por Mauchly y Eckert, es considerada el primer computador electrónico digital?",
+    "reverso": "ENIAC (Electronic Numerical Integrator and Computer)."
+  },
+  {
+    "frente": "¿Qué dos características principales diferenciaban al EDVAC del ENIAC?",
+    "reverso": "El empleo de aritmética binaria y la capacidad de trabajar con un programa almacenado."
+  },
+  {
+    "frente": "¿Cuál fue el principal cambio tecnológico que marcó la segunda generación de computadoras en 1958?",
+    "reverso": "El uso de circuitos transistorizados en lugar de válvulas al vacío."
+  },
+  {
+    "frente": "¿Qué estándar universal, desarrollado en 1963, permitió el intercambio de información entre computadores de distintas marcas?",
+    "reverso": "El código ASCII (American Standard Code for Information Interchange)."
+  },
+  {
+    "frente": "¿Qué protocolo, definido en 1981, se convirtió en el estándar para la interconexión de redes y dio origen a Internet?",
+    "reverso": "TCP/IP (Transfer Control Protocol / Internet Protocol)."
+  },
+  {
+    "frente": "¿Qué tres elementos fundamentales creó Tim Berners-Lee en 1990 para facilitar la interacción con Internet (World Wide Web)?",
+    "reverso": "El protocolo HTTP, el lenguaje HTML y el concepto de URL."
+  }
+]

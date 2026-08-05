@@ -1,0 +1,9 @@
+La historia de la informática no es fruto de un único inventor, sino un proceso evolutivo que abarca siglos. Los primeros antecedentes se encuentran en instrumentos de cálculo manual como el ábaco, seguidos por innovaciones mecánicas como la pascalina de Blaise Pascal y la máquina de calcular de Leibnitz en el siglo XVII.
+
+El siglo XIX marcó un punto de inflexión con las tarjetas perforadas de Jacquard, el motor analítico de Charles Babbage y la visión de Ada Lovelace sobre la programación. Más tarde, Herman Hollerith automatizó el censo estadounidense, sentando las bases de lo que se convertiría en IBM.
+
+A mediados del siglo XX, la necesidad de mayor velocidad de cálculo durante la Segunda Guerra Mundial impulsó el desarrollo de computadores electrónicos. El ENIAC, construido por Mauchly y Eckert, transformó el panorama tecnológico mediante el uso de tubos de vacío, aunque pronto fue superado por máquinas con programas almacenados, como el EDVAC de Von Neumann.
+
+La evolución continuó con la transición de válvulas a transistores en la segunda generación y la llegada de los circuitos integrados en la tercera, lo que permitió reducir drásticamente el tamaño y aumentar la potencia de los equipos. Paralelamente, la creación de estándares como el código ASCII y la invención de redes descentralizadas como ARPANET sentaron los pilares de Internet.
+
+A partir de los años 70, la informática se democratizó con la aparición del computador personal, destacando hitos como la comercialización del Altair 8800, el éxito de Apple y la estandarización del IBM PC junto a Microsoft. El desarrollo de sistemas operativos como Unix y Linux, junto con la creación de la World Wide Web por Tim Berners-Lee en 1990, consolidaron la revolución digital. La historia reciente se ha caracterizado por la expansión de la banda ancha y la exploración de nuevas fronteras, como la computación cuántica, reafirmando el papel transformador de esta tecnología en la sociedad global.

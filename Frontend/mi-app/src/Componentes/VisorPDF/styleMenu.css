@@ -1,6 +1,4 @@
-/* =====================================
-   MENÚ CONTEXTUAL
-===================================== */
+
 
 .menu-flotante {
 
@@ -33,9 +31,6 @@
 
 }
 
-/* =====================================
-   ANIMACIÓN
-===================================== */
 
 @keyframes menuEntrada {
 
@@ -57,9 +52,7 @@
 
 }
 
-/* =====================================
-   BOTONES
-===================================== */
+
 
 .menu-flotante button {
 
@@ -87,9 +80,6 @@
 
 }
 
-/* =====================================
-   ESCUCHAR
-===================================== */
 
 .btn-menu-escuchar {
 
@@ -109,9 +99,7 @@
 
 }
 
-/* =====================================
-   EXPLICAR
-===================================== */
+
 
 .btn-menu-explicar {
 
@@ -131,9 +119,7 @@
 
 }
 
-/* =====================================
-   DESHABILITADO
-===================================== */
+
 
 .btn-menu-explicar:disabled {
 
@@ -147,9 +133,7 @@
 
 }
 
-/* =====================================
-   ICONOS
-===================================== */
+
 
 .menu-flotante button span {
 
@@ -157,12 +141,112 @@
 
 }
 
-/* =====================================
-   EFECTO CLICK
-===================================== */
+
 
 .menu-flotante button:active {
 
     transform: scale(.98);
 
+}
+.panel-herramientas {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .panel-herramientas {
+        flex-direction: row;
+    }
+}
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.visor-container {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 100vh;
+    padding: 10px !important;
+  
+}
+
+@media (min-width: 768px) {
+    .visor-container {
+        padding: 20px !important;
+    }
+}
+
+
+.botonera {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+
+.hoja-texto {
+    width: 100%;
+    max-width: 900px;
+  
+    margin: 0 auto;
+   
+    word-break: break-word;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
+}
+
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    box-sizing: border-box;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #ffffff;
+    color: #1a1a1a;
+    padding: 20px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+}
+
+
+@media (max-width: 768px) {
+
+  
+    .hoja-texto {
+        padding: 12px !important;
+    }
+
+  
+    h1 {
+        font-size: 1.8rem !important;
+    }
+
+    h2 {
+        font-size: 1.4rem !important;
+    }
+
+    .boton-accesible,
+    .boton-accesible2 {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
 }

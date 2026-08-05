@@ -1,53 +1,141 @@
-.modal-overlay {
+/* =========================================
+   MODO CONCENTRADO (Fondo negro y sin estímulos)
+   ========================================= */
+
+.zen-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.95);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2000;
-}
-
-.modal-content {
-    background: rgb(12, 12, 12);
-    width: 90%;
-    height: 90%;
-    position: relative;
-   
-    border-radius: 8px;
-    display: flex;
-   
-    flex-direction: column;
-    
+    z-index: 99999;
     padding: 20px;
-    color: #eff3f3;
+    backdrop-filter: blur(8px);
 }
 
-.modal-close-btn {
+.zen-content {
+    background: #000000;
+    width: 95vw;
+    height: 90vh;
+    border-radius: 16px;
+    border: 1px solid #1a1a1a;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.zen-close-btn {
     position: absolute;
     top: 20px;
-  
     right: 20px;
-   
     z-index: 10;
-   
     cursor: pointer;
-    background: #070707;
-   
-    border: none;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 4px;
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid #333333;
+    color: #888888;
+    font-size: 16px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
 }
 
-.modal-body {
-    height: 100%;
-    width: 100%;
+.zen-close-btn:hover {
+    background: rgba(50, 50, 50, 0.9);
+    color: #ffffff;
+    border-color: #555555;
+    transform: scale(1.05);
+}
+
+.zen-header {
+    padding: 30px 20px 20px;
+    text-align: center;
+    background: #000000;
+    border-bottom: 1px solid #1a1a1a;
+    flex-shrink: 0;
+}
+
+.zen-header h2 {
+    font-size: 0.9rem;
+    color: #555555;
+    margin: 0;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.zen-body-scroll {
+    flex: 1;
+    min-height: 0;
     overflow-y: auto;
-   
-    padding-bottom: 50px;
-   
+    padding: 40px 60px;
+    scrollbar-width: thin;
+    scrollbar-color: #1a1a1a #000000;
+}
+
+.zen-body-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.zen-body-scroll::-webkit-scrollbar-track {
+    background: #000000;
+}
+
+.zen-body-scroll::-webkit-scrollbar-thumb {
+    background: #1a1a1a;
+    border-radius: 10px;
+}
+
+.zen-body-scroll::-webkit-scrollbar-thumb:hover {
+    background: #333333;
+}
+
+.zen-text-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* =========================================
+   RESPONSIVO (Móviles y Tablets)
+   ========================================= */
+
+@media (max-width: 992px) {
+    .zen-overlay {
+        padding: 0;
+    }
+
+    .zen-content {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        border-radius: 0;
+        border: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .zen-body-scroll {
+        padding: 25px 20px;
+    }
+
+    .zen-header {
+        padding: 20px 15px;
+    }
 }

@@ -44,8 +44,8 @@ export default function HojaTexto({
         cursor: 'text',
         padding: '24px',
         borderRadius: '8px',
-        lineHeight: '1.5',        // Interlineado natural y cómodo
-        textAlign: 'left'         // Alineación a la izquierda para mejor lectura
+        lineHeight: '1.5',      
+        textAlign: 'left'        
       }}
     >
       {lineasTexto.map((linea, index) => {
@@ -65,9 +65,7 @@ export default function HojaTexto({
             </h3>
           );
         }
-        
-        // 🌟 SOLUCIÓN: Usamos un fragmento con un <br /> para saltar de renglón
-        // sin meter los márgenes pesados que tienen las etiquetas <p>
+     
         return (
           <span key={index} style={{ display: 'block', marginBottom: '4px' }}>
             {linea}

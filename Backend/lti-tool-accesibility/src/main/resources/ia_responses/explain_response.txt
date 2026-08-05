@@ -1,0 +1,9 @@
+La computadora no surgió gracias a la genialidad de una sola persona, sino que es el fruto de una evolución constante donde participaron expertos en distintas áreas como la electrónica, la lógica y las matemáticas. Es un trabajo acumulativo de siglos de esfuerzo humano.
+
+La historia de la computación comenzó hace miles de años por la necesidad de contar. Los babilonios, hace unos cinco milenios, usaban semillas o piedras para realizar sus primeras operaciones básicas. Poco tiempo después, la cultura babilónica dio un paso gigante al crear los algoritmos, que no son más que pasos ordenados y lógicos para resolver problemas matemáticos.
+
+Más tarde, los chinos perfeccionaron esta idea con el ábaco, un marco con cuentas deslizantes que permitía procesar cálculos complejos con mucha mayor rapidez que usando solo las manos.
+
+Con el paso de los siglos, el ingenio humano buscó automatizar estas tareas. En el siglo diecisiete, John Napier creó un sistema de palillos numéricos para simplificar multiplicaciones y divisiones. Poco después, Blaise Pascal, siendo muy joven, inventó la pascalina, una máquina mecánica con ruedas dentadas que funcionaba con una manivela para sumar y restar de forma automática, diseñada originalmente para ayudar a su padre con el trabajo de contabilidad.
+
+Finalmente, Gottfried Leibniz mejoró estos conceptos al desarrollar una calculadora capaz de realizar operaciones más avanzadas, como raíces cuadradas, utilizando el sistema binario, que es precisamente la base fundamental en la que funcionan todas las computadoras modernas.
